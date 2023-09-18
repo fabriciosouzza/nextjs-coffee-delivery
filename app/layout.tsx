@@ -1,12 +1,20 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Roboto, Baloo_2 } from 'next/font/google'
 import cart from "./assets/cart.svg"
 import logo from "./assets/logo.svg"
 import map from "./assets/map.svg"
 import Image from 'next/image'
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '700']
+})
+
+const baloo = Baloo_2({
+  subsets: ['latin'],
+  weight: ['700', '800']
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,12 +28,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className='bg-background'>
         <header className='h-10 mx-40 my-8 flex justify-between'>
           <Image src={logo} width={85} height={40} alt='' />
           <div className='flex gap-3'>
-            <span className='flex'><Image src={map} width={22} height={22} alt='' />Porto Alegre</span>
-            <Image src={cart} width={22} height={22} alt='' />
+            <div className='flex justify-center items-center p-2 gap-1 bg-purple-light rounded-md'>
+              <Image src={map} width={22} height={22} alt='' />
+              <span className='text-purple-dark text-sm'>Porto Alegre, RS</span>
+            </div>
+            <div className='flex'>
+              <span className='p-2 bg-yellow-light rounded-md'><Image src={cart} width={22} height={22} alt='' /></span> 
+              <span className='flex justify-center items-center -ml-2 -mt-2 w-5 h-5 bg-yellow-dark rounded-full text-white text-xs tracking-tighter font-bold'>3</span>
+            </div>
           </div>
         </header>
         {children}
