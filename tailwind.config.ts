@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        "2xl": "1440px"
+      },
       colors: {
         "yellow-dark": "var(--yellow-dark)",
         "yellow": "var(--yellow)",
@@ -27,9 +30,17 @@ const config: Config = {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'custom-background': "url('/background.png')",
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      spacing: {
+        '256-custom': '34rem'
+      },
+      fontFamily: {
+        'Baloo_2': 'var(--font-baloo)',
+        'Roboto': 'var(--font-roboto)'
+      }
     },
   },
   plugins: [],

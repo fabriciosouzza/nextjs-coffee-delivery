@@ -1,19 +1,18 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto, Baloo_2 } from 'next/font/google'
-import cart from "./assets/cart.svg"
-import logo from "./assets/logo.svg"
-import map from "./assets/map.svg"
-import Image from 'next/image'
+import Navbar from './components/Navbar'
 
 const roboto = Roboto({
   subsets: ['latin'],
-  weight: ['400', '700']
+  weight: ['400', '700'],
+  variable: '--font-roboto'
 })
 
 const baloo = Baloo_2({
   subsets: ['latin'],
-  weight: ['700', '800']
+  weight: ['700', '800'],
+  variable: '--font-baloo'
 })
 
 export const metadata: Metadata = {
@@ -27,21 +26,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${roboto.variable} ${baloo.variable}`}>
       <body className='bg-background'>
-        <header className='h-10 mx-40 my-8 flex justify-between'>
-          <Image src={logo} width={85} height={40} alt='' />
-          <div className='flex gap-3'>
-            <div className='flex justify-center items-center p-2 gap-1 bg-purple-light rounded-md'>
-              <Image src={map} width={22} height={22} alt='' />
-              <span className='text-purple-dark text-sm'>Porto Alegre, RS</span>
-            </div>
-            <div className='flex'>
-              <span className='p-2 bg-yellow-light rounded-md'><Image src={cart} width={22} height={22} alt='' /></span> 
-              <span className='flex justify-center items-center -ml-2 -mt-2 w-5 h-5 bg-yellow-dark rounded-full text-white text-xs tracking-tighter font-bold'>3</span>
-            </div>
-          </div>
-        </header>
+        <Navbar />
         {children}
       </body>
     </html>
