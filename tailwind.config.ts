@@ -21,6 +21,7 @@ const config: Config = {
         "base-title":"var(--base-title)",
         "base-subtitle": "var(--base-subtitle)",
         "base-text": "var(--base-text)",
+        "base-label": "var(--base-label)",
         "base-hover": "var(--base-hover)",
         "base-button": "var(--base-button)",
         "base-input": "var(--base-input)",
@@ -34,13 +35,10 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-      spacing: {
-        '256-custom': '34rem'
-      },
       fontFamily: {
         'Baloo_2': 'var(--font-baloo)',
         'Roboto': 'var(--font-roboto)'
-      }
+      },
     },
   },
   plugins: [],
