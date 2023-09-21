@@ -8,7 +8,11 @@ export default function ProductCardForm() {
     const [inputValue, setInputValue] = useState(0);
 
     const HandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event?.target.value)
+        setInputValue(event.target.value)
+    }
+
+    function handleChangeAlgumaCoisa() {
+        
     }
 
     const HandleIncreaseInput = () => setInputValue(inputValue + 1);

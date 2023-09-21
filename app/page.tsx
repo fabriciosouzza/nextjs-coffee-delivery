@@ -1,23 +1,26 @@
-import Link from "next/link";
 import IntroSection from "./components/IntroSection";
 import ProductCard from "./components/ProductCard";
-
 
 export default function Home() {
   return (
     <main>
       <IntroSection />
-      <p className="container mx-auto font-Baloo_2 text-[2rem] leading-10 font-extrabold text-base-subtitle mt-8 mb-14">Nossos cafés</p>
-      <div className="container mx-auto grid grid-cols-4 gap-y-10 mb-40">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+      <h3 className="container mx-auto px-4 font-Baloo_2 text-[2rem] leading-10 font-extrabold text-base-subtitle mt-8 mb-14">
+        Nossos cafés
+      </h3>
+      <div className="container mx-auto px-4 mb-10">
+        <div className="flex flex-wrap justify-center gap-10 sm:justify-between w-full md:gap-12 lg:gap-10 2xl:gap-12">
+          <div className=""><ProductCard /></div>
+          <div className=""><ProductCard /></div>
+          <div className=""><ProductCard /></div>
+          <div className=""><ProductCard /></div>
+          <div className=""><ProductCard /></div>
+          <div className=""><ProductCard /></div>
+          <div className=""><ProductCard /></div>
+          <div className=""><ProductCard /></div>
+          <div className=""><ProductCard /></div>
+        </div>
       </div>
     </main>
-  )
+  );
 }

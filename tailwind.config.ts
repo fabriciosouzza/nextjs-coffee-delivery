@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        "2xl": "1440px"
+        "2xl": "1440px",
       },
       colors: {
         "yellow-dark": "var(--yellow-dark)",
@@ -38,6 +38,9 @@ const config: Config = {
       fontFamily: {
         'Baloo_2': 'var(--font-baloo)',
         'Roboto': 'var(--font-roboto)'
+      },
+      gridTemplateColumns: {
+        'custom-grid': 'repeat(4, minmax(0, 1fr))'
       },
     },
   },

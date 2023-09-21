@@ -7,12 +7,12 @@ import { MapPin, ShoppingCart } from "@phosphor-icons/react";
 
 export default function Navbar() {
     return (
-        <header className='container mx-auto h-10 my-8 flex justify-between'>
+        <header className='container mx-auto px-4 h-10 my-8 flex justify-between'>
           <Link href="/"><Image src={logo} width={85} height={40} alt='' /></Link>
           <div className='flex gap-3'>
             <div className='flex justify-center items-center p-2 gap-1 bg-purple-light rounded-md cursor-pointer'>
               <MapPin size={22} color="#8047F8" weight="fill" />
-              <span className='text-purple-dark text-sm font-Roboto'>Porto Alegre, RS</span>
+              <span className='text-purple-dark text-sm font-Roboto hidden min-[360px]:inline'>Porto Alegre, RS</span>
             </div>
             <div className='flex'>
               <span className='p-2 bg-yellow-light rounded-md'><Link href="/checkout"><ShoppingCart size={22} color="#C47F17" weight="fill"/></Link></span> 
