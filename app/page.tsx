@@ -1,7 +1,18 @@
 import IntroSection from "./components/IntroSection";
 import ProductCard from "./components/ProductCard";
+import { productList } from "../api-data/products";
+
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  tag: string[];
+  price: string;
+  image: string;
+}
 
 export default function Home() {
+  const products: Product[] = productList;
   return (
     <main>
       <IntroSection />
@@ -9,16 +20,8 @@ export default function Home() {
         Nossos cafés
       </h3>
       <div className="container mx-auto px-4 mb-10">
-        <div className="flex flex-wrap justify-center gap-10 sm:justify-between w-full md:gap-12 lg:gap-10 2xl:gap-12">
-          <div className=""><ProductCard /></div>
-          <div className=""><ProductCard /></div>
-          <div className=""><ProductCard /></div>
-          <div className=""><ProductCard /></div>
-          <div className=""><ProductCard /></div>
-          <div className=""><ProductCard /></div>
-          <div className=""><ProductCard /></div>
-          <div className=""><ProductCard /></div>
-          <div className=""><ProductCard /></div>
+        <div className="grid grid-cols-1 gap-10 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {products.map((card) => <ProductCard key={card.id} data={card} /> )}
         </div>
       </div>
     </main>

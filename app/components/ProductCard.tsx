@@ -1,21 +1,33 @@
 import Image from "next/image";
-import ProductCardForm from "./ProductCardForm";
-import tradicionalAPAGAR from "../../public/coffeeAssets/tradicional.png";
+import ProductCardAdd from "./ProductCardAdd";
+import { Product } from "../page";
+import React from "react";
 
-export default function ProductCard() {
+interface ProductCardProps {
+  data: Product;
+}
+
+export default function ProductCard({ data }: ProductCardProps) {
   return (
     <div className="flex flex-col items-center justify-around w-64 h-[19.375rem] bg-base-card rounded-md rounded-tr-[2.25rem] rounded-bl-[2.25rem]">
       <span className="-mt-7">
-        <Image src={tradicionalAPAGAR} width={120} height={120} alt="" />
+        <Image src={data.image} width={120} height={120} alt="" />
       </span>
-      <p className="flex justify-center px-2 py-1 rounded-full bg-yellow-light text-yellow-dark font-Roboto text-[0.625rem] leading-3 uppercase font-bold">
-        tradicional
-      </p>
-      <p className="font-Baloo_2 text-xl capitalize font-bold">
-        expresso tradicional
-      </p>
+      <div className="flex gap-1">
+        {data.tag.map((item, index) => {
+          return (
+              <span
+                key={index}
+                className="flex justify-center px-2 py-1 rounded-full bg-yellow-light text-yellow-dark font-Roboto text-[0.625rem] leading-3 uppercase font-bold"
+              >
+                {item}
+              </span>
+          );
+        })}
+      </div>
+      <p className="font-Baloo_2 text-xl capitalize font-bold">{data.name}</p>
       <p className="w-52 text-center font-Roboto text-sm font-normal text-base-label">
-        O tradicional café feito com água quente e grãos moídos
+        {data.description}
       </p>
 
       <div className="flex w-52 justify-between items-center">
@@ -25,7 +37,7 @@ export default function ProductCard() {
             9,90
           </span>
         </p>
-        <ProductCardForm />
+        <ProductCardAdd />
       </div>
     </div>
   );

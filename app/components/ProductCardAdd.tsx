@@ -1,19 +1,17 @@
 'use client'
 
 import { Minus, Plus, ShoppingCartSimple } from "@phosphor-icons/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
-export default function ProductCardForm() {
+export default function ProductCardAdd() {
     const [inputValue, setInputValue] = useState(0);
-
-    const HandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value)
+    
+    const HandleAddToCart = () => {
+        console.log(`Foram adicionadas ${inputValue} xícaras de café`)
+        setInputValue(0)
     }
 
-    function handleChangeAlgumaCoisa() {
-        
-    }
 
     const HandleIncreaseInput = () => setInputValue(inputValue + 1);
 
@@ -23,13 +21,9 @@ export default function ProductCardForm() {
         };
     };
 
-    const HandleAddToCart = () => {
-        console.log(inputValue)
-        setInputValue(0)
-    }
 
     return (
-        <form className="flex items-center gap-2" action="">
+        <section className="flex items-center gap-2">
             <div className="flex justify-center items-center gap-1 p-2 rounded-md bg-base-button">
                 <button type="button" onClick={HandleDecreaseInput}><Minus size={14} color="#8047F8" weight="bold" /></button>
                 <input
@@ -37,7 +31,6 @@ export default function ProductCardForm() {
                     type="number"
                     name=""
                     id=""
-                    onChange={HandleChange}
                     value={inputValue}
                     min={0}
                     readOnly />
@@ -46,6 +39,6 @@ export default function ProductCardForm() {
             <button className="flex p-2 justify-center items-center gap-2 rounded-md bg-purple-dark" type="button" onClick={HandleAddToCart}>
                 <ShoppingCartSimple size={16} weight="fill" color="#F3F2F2" />
             </button>
-        </form>
+        </section>
     );
 }
