@@ -1,18 +1,26 @@
+'use client';
 import IntroSection from "./components/IntroSection";
 import ProductCard from "./components/ProductCard";
-import { productList } from "../api-data/products";
+import { useEffect, useState } from "react";
+import { listCoffees } from "@/services/coffeeServices";
+import { Product } from "@/utils/models";
 
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  tag: string[];
-  price: string;
-  image: string;
-}
+
 
 export default function Home() {
-  const products: Product[] = productList;
+  const [coffees, setCoffees] = useState<Product[]>([]);
+
+  useEffect(() => {
+    async function fecthCoffees() {
+      try {
+        const response: Product[] | undefined = await listCoffees();
+        if (response) {
+          setCoffees(response);
+        }
+      } catch (error) {}
+    }
+    fecthCoffees();
+  }, []);
   return (
     <main>
       <IntroSection />
@@ -21,7 +29,9 @@ export default function Home() {
       </h3>
       <div className="container mx-auto px-4 mb-10">
         <div className="grid grid-cols-1 gap-10 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((card) => <ProductCard key={card.id} data={card} /> )}
+          {coffees.map((card) => (
+            <ProductCard key={card.id} data={card.attributes} />
+          ))}
         </div>
       </div>
     </main>

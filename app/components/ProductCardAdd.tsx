@@ -1,7 +1,7 @@
 'use client'
 
 import { Minus, Plus, ShoppingCartSimple } from "@phosphor-icons/react";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export default function ProductCardAdd() {

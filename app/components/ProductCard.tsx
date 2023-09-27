@@ -1,26 +1,28 @@
 import Image from "next/image";
 import ProductCardAdd from "./ProductCardAdd";
-import { Product } from "../page";
 import React from "react";
+import { productAttributes } from "@/utils/models";
 
 interface ProductCardProps {
-  data: Product;
+  data: productAttributes;
 }
 
 export default function ProductCard({ data }: ProductCardProps) {
+    const coffeeImage = `http://localhost:1337${data.image.data.attributes.url}`
+    console.log(data.image.data.attributes.url)
   return (
     <div className="flex flex-col items-center justify-around w-64 h-[19.375rem] bg-base-card rounded-md rounded-tr-[2.25rem] rounded-bl-[2.25rem]">
       <span className="-mt-7">
-        <Image src={data.image} width={120} height={120} alt="" />
+        <Image src={coffeeImage} width={120} height={120} alt="" />
       </span>
       <div className="flex gap-1">
-        {data.tag.map((item, index) => {
+        {data.tags.data.map((item) => {
           return (
               <span
-                key={index}
+                key={item.id}
                 className="flex justify-center px-2 py-1 rounded-full bg-yellow-light text-yellow-dark font-Roboto text-[0.625rem] leading-3 uppercase font-bold"
               >
-                {item}
+                {item.attributes.type}
               </span>
           );
         })}
