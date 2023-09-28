@@ -7,7 +7,7 @@ export interface productAttributes {
     name: string;
     description: string;
     tags: productTags;
-    price: string;
+    price: number;
     image: productImage;
   }
 
@@ -35,4 +35,11 @@ export interface productAttributes {
 
   interface imagesAttributes {
     url: string;
+  }
+
+  export interface productOrderType {
+    id: number,
+    name: string,
+    price: number,
+    amount: number,
   }
