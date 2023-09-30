@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ id, data }: ProductCardProps) {
   
-  const { productsStates, addNewProduct } = useContext(OrderContext);
+  const { productsStates, addNewProduct, deleteProduct, increaseProductAmount, decreaseProductAmount } = useContext(OrderContext);
   const [inputValue, setInputValue] = useState(0);
 
   const coffeeImage = `http://coffee-strapi:1337${data.image.data.attributes.url}`;
@@ -24,6 +24,23 @@ export default function ProductCard({ id, data }: ProductCardProps) {
       price: data.price,
       amount: inputValue,
     };
+
+  //   const attributesToTest = {
+  //     id: 10,
+  //     name: "teste",
+  //     price: 12,
+  //     amount: 5,
+  //   }
+
+  // function handleDelete() {
+  //   deleteProduct(attributesToTest)
+  // }
+  // function handleIncrease() {
+  //   increaseProductAmount(attributesToTest)
+  // }
+  // function handleDecrease() {
+  //   decreaseProductAmount(attributesToTest)
+  // }
 
   function HandleAddToCart() {
     if (inputValue > 0) {
@@ -48,6 +65,11 @@ export default function ProductCard({ id, data }: ProductCardProps) {
     <div className="flex flex-col items-center justify-around w-64 h-[19.375rem] bg-base-card rounded-md rounded-tr-[2.25rem] rounded-bl-[2.25rem]">
       <span className="-mt-7">
         <Image src={coffeeImage} width={120} height={120} alt="" />
+        <div>
+          {/* <button onClick={handleDelete}>DELETE</button>
+          <button onClick={handleIncrease}>increase</button>
+          <button onClick={handleDecrease}>decrease</button> */}
+        </div>
       </span>
       <div className="flex gap-1">
         {data.tags.data.map((item) => {

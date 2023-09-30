@@ -11,22 +11,43 @@ export function addNewProductAction(orderAttributes: productOrderType) {
     return {
         type: ActionTypes.ADD_NEW_PRODUCT,
         payload: {
-            orderAttributes,
+            id: orderAttributes.id,
+            name: orderAttributes.name,
+            price: orderAttributes.price,
+            amount: orderAttributes.amount
         }
     }
 }
-export function deleteProductAction() {
+export function deleteProductAction(orderAttributes: productOrderType) {
     return {
         type: ActionTypes.DELETE_PRODUCT,
+        payload: {
+            id: orderAttributes.id,
+            name: orderAttributes.name,
+            price: orderAttributes.price,
+            amount: orderAttributes.amount
+        }
     }
 }
-export function increaseProductAction() {
+export function increaseProductAction(orderAttributes: productOrderType) {
     return {
         type: ActionTypes.INCREASE_PRODUCT_AMOUNT,
+        payload: {
+            id: orderAttributes.id,
+            name: orderAttributes.name,
+            price: orderAttributes.price,
+            amount: orderAttributes.amount
+        }
     }
 }
-export function decreaseProductAction() {
+export function decreaseProductAction(orderAttributes: productOrderType) {
     return {
         type: ActionTypes.DECREASE_PRODUCT_AMOUNT,
+        payload: {
+            id: orderAttributes.id,
+            name: orderAttributes.name,
+            price: orderAttributes.price,
+            amount: orderAttributes.amount
+        }
     }
 }

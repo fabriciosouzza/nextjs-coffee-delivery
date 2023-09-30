@@ -1,16 +1,51 @@
 import { productOrderType } from "@/utils/models";
 import { ActionTypes } from "./actions";
 
+export function productOrderReducer(state: productOrderType[], action: any) {
+  switch (action.type) {
+    case ActionTypes.ADD_NEW_PRODUCT:
+      if (state.find((product) => product.id === action.payload.id)) {
+        let updatedState = state.map((productState) => {
+          if (productState.id === action.payload.id) {
+            return {
+              ...productState,
+              amount: (productState.amount += action.payload.amount),
+            };
+          }
+          return productState;
+        });
 
-export function productOrderReducer(state: productOrderType[] , action: any) {
-    switch (action.type) {
-        case ActionTypes.ADD_NEW_PRODUCT:
-            return [...state, action.payload]
-        case ActionTypes.INCREASE_PRODUCT_AMOUNT:
-        case ActionTypes.DECREASE_PRODUCT_AMOUNT:
-        case ActionTypes.DELETE_PRODUCT:
-    
-        default:
-            return state;
-    }
+        return updatedState;
+      } else {
+        return [...state, action.payload];
+      }
+    case ActionTypes.INCREASE_PRODUCT_AMOUNT:
+      let updatedIncreasedState = state.map((productState) => {
+        if (productState.id === action.payload.id) {
+          return {
+            ...productState,
+            amount: (productState.amount += action.payload.amount),
+          };
+        }
+        return productState;
+      });
+
+      return updatedIncreasedState;
+    case ActionTypes.DECREASE_PRODUCT_AMOUNT:
+      let updatedDecreasedState = state.map((productState) => {
+        if (productState.id === action.payload.id) {
+          return {
+            ...productState,
+            amount: (productState.amount -= action.payload.amount),
+          };
+        }
+        return productState;
+      });
+      return updatedDecreasedState.filter((product) => product.amount > 0);
+    case ActionTypes.DELETE_PRODUCT:
+      return state.filter((product) => product.id !== action.payload.id);
+
+    default:
+      return state;
+  }
 }
