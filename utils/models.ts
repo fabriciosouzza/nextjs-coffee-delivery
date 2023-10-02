@@ -38,8 +38,9 @@ export interface productAttributes {
   }
 
   export interface productOrderType {
-    id: number,
-    name: string,
-    price: number,
-    amount: number,
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+    amount: number;
   }

@@ -14,6 +14,7 @@ export function addNewProductAction(orderAttributes: productOrderType) {
             id: orderAttributes.id,
             name: orderAttributes.name,
             price: orderAttributes.price,
+            image: orderAttributes.image,
             amount: orderAttributes.amount
         }
     }
@@ -25,6 +26,7 @@ export function deleteProductAction(orderAttributes: productOrderType) {
             id: orderAttributes.id,
             name: orderAttributes.name,
             price: orderAttributes.price,
+            image: orderAttributes.image,
             amount: orderAttributes.amount
         }
     }
@@ -36,6 +38,7 @@ export function increaseProductAction(orderAttributes: productOrderType) {
             id: orderAttributes.id,
             name: orderAttributes.name,
             price: orderAttributes.price,
+            image: orderAttributes.image,
             amount: orderAttributes.amount
         }
     }
@@ -47,6 +50,7 @@ export function decreaseProductAction(orderAttributes: productOrderType) {
             id: orderAttributes.id,
             name: orderAttributes.name,
             price: orderAttributes.price,
+            image: orderAttributes.image,
             amount: orderAttributes.amount
         }
     }

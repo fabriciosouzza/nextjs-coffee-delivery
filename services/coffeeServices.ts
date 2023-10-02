@@ -11,7 +11,6 @@ export async function listCoffees(): Promise<Product[] | undefined>  {
     ); 
     if (listCoffeesReq.ok) {
         const coffeeData = await listCoffeesReq.json();
-        console.log("coffees:", coffeeData.data)
         return coffeeData.data as Product[];   
     }
   } catch (error) {

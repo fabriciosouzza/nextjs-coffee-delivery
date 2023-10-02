@@ -1,3 +1,4 @@
+'use client'
 import {
   addNewProductAction,
   decreaseProductAction,
@@ -15,7 +16,7 @@ interface OrderContextProviderProps {
 }
 
 interface OrderContextType {
-    productsStates: productOrderType[];
+  productsState: productOrderType[];
   addNewProduct: (orderAttributes: productOrderType) => void;
   deleteProduct: (orderAttributes: productOrderType) => void;
   increaseProductAmount: (orderAttributes: productOrderType) => void;
@@ -25,7 +26,7 @@ interface OrderContextType {
 export default function OrderContextProvider({
   children,
 }: OrderContextProviderProps) {
-  const [productsStates, dispatch] = useReducer(productOrderReducer, []);
+  const [productsState, dispatch] = useReducer(productOrderReducer, []);
 
   function addNewProduct(orderAttributes: productOrderType) {
     dispatch(addNewProductAction(orderAttributes));
@@ -41,7 +42,7 @@ export default function OrderContextProvider({
   }
 
   return (
-    <OrderContext.Provider value={{ productsStates, addNewProduct, deleteProduct, increaseProductAmount, decreaseProductAmount }}>
+    <OrderContext.Provider value={{ productsState, addNewProduct, deleteProduct, increaseProductAmount, decreaseProductAmount }}>
       {children}
     </OrderContext.Provider>
   );
