@@ -8,9 +8,9 @@ export default function Checkout() {
   const { productsState } = useContext(OrderContext);
 
   const totalItems = productsState.reduce(function (acc, current) {
-    return acc + ((current.price as number) * (current.amount as number))
-  }, 0)
-  
+    return acc + (current.price as number) * (current.amount as number);
+  }, 0);
+
   const deliveryFee = 2;
   const totalOrder = totalItems + deliveryFee;
 
@@ -28,7 +28,7 @@ export default function Checkout() {
           Cafés selecionados
         </h4>
         <div className="flex flex-col w-[28rem] p-10 items-start gap-6 rounded-md rounded-tr-[2.75rem] rounded-bl-[2.75rem] bg-base-card">
-          <div>
+          <div className="overflow-y-auto max-h-[30.5rem]">
             {productsState.map((product) => (
               <>
                 <ProductResumeCard key={product.id} data={product} />
@@ -48,9 +48,7 @@ export default function Checkout() {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })
-                )
-                  .padEnd(4, "0")
-                  .replace(".", ",")}
+                ).replace(".", ",")}
               </span>
             </div>
             <div className="flex justify-between items-center self-stretch">
@@ -64,9 +62,7 @@ export default function Checkout() {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })
-                )
-                  .padEnd(4, "0")
-                  .replace(".", ",")}
+                ).replace(".", ",")}
               </span>
             </div>
             <div className="flex justify-between items-center self-stretch">
@@ -80,9 +76,7 @@ export default function Checkout() {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })
-                )
-                  .padEnd(4, "0")
-                  .replace(".", ",")}
+                ).replace(".", ",")}
               </span>
             </div>
           </div>

@@ -31,6 +31,12 @@
   }
 }
 
+@layer components {
+  .radio-label:has(input:checked) {
+    @apply bg-purple-light border border-purple p-[15px];
+  }
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;

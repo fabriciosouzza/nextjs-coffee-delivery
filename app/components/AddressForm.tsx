@@ -82,7 +82,7 @@ export default function AddressForm() {
           </div>
         </div>
         <fieldset className="flex justify-center gap-3 items-center self-stretch">
-          <label className="flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover focus-within:bg-purple-light focus-within:border focus-within:border-purple focus-within:p-[15px]">
+          <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
             <input className="w-0 opacity-0" type="radio" name="radio" />
             <CreditCard size={16} fill="#8047F8" />
             <span className="font-Roboto text-xs text-base-text uppercase">
@@ -90,7 +90,7 @@ export default function AddressForm() {
             </span>
           </label>
 
-          <label className="flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover focus-within:bg-purple-light focus-within:border focus-within:border-purple focus-within:p-[15px]">
+          <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
             <input className="w-0 opacity-0" type="radio" name="radio" />
             <Bank size={16} fill="#8047F8" />
             <span className="font-Roboto text-xs text-base-text uppercase">
@@ -98,7 +98,7 @@ export default function AddressForm() {
             </span>
           </label>
 
-          <label className="flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover focus-within:bg-purple-light focus-within:border focus-within:border-purple focus-within:p-[15px]">
+          <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
             <input className="w-0 opacity-0" type="radio" name="radio" />
             <Money size={16} fill="#8047F8" />
             <span className="font-Roboto text-xs text-base-text uppercase">
