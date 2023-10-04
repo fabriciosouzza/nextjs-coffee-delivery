@@ -1,12 +1,14 @@
 "use client";
 import IntroSection from "./components/IntroSection";
 import ProductCard from "./components/ProductCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { listCoffees } from "@/services/coffeeServices";
 import { Product } from "@/utils/models";
+import { OrderContext } from "@/context/OrderContext";
 
 export default function Home() {
   const [coffees, setCoffees] = useState<Product[]>([]);
+  // const { productsState } = useContext(OrderContext);
 
   useEffect(() => {
     async function fecthCoffees() {
@@ -19,6 +21,8 @@ export default function Home() {
     }
     fecthCoffees();
   }, []);
+
+  // console.log(productsState)
 
   return (
     <main>

@@ -36,12 +36,12 @@ export function productOrderReducer(state: productOrderType[], action: any) {
         if (productState.id === action.payload.id) {
           return {
             ...productState,
-            amount: (productState.amount -= action.payload.amount),
+            amount: ((productState.amount as number) -= action.payload.amount),
           };
         }
         return productState;
       });
-      return updatedDecreasedState.filter((product) => product.amount > 0);
+      return updatedDecreasedState.filter((product) => (product.amount as number) > 0);
     case ActionTypes.DELETE_PRODUCT:
       return state.filter((product) => product.id !== action.payload.id);
 

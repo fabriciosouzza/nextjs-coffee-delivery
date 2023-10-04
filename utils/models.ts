@@ -37,10 +37,14 @@ export interface productAttributes {
     url: string;
   }
 
+  export interface resumeActionOrderType{
+    data: productOrderType
+  }
+
   export interface productOrderType {
     id: number;
-    name: string;
-    price: number;
-    image: string;
-    amount: number;
+    name?: string;
+    price?: number;
+    image?: string;
+    amount?: number;
   }

@@ -26,16 +26,6 @@ export default function ProductCard({ id, data }: ProductCardProps) {
       amount: inputValue,
     };
 
-  function handleDelete() {
-    deleteProduct(orderAttributes)
-  }
-  function handleIncrease() {
-    increaseProductAmount(orderAttributes)
-  }
-  function handleDecrease() {
-    decreaseProductAmount(orderAttributes)
-  }
-
   function HandleAddToCart() {
     if (inputValue > 0) {
       addNewProduct(orderAttributes);
