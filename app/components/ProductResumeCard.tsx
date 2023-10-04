@@ -32,6 +32,7 @@ export default function ProductResumeCard(attributes: resumeActionOrderType) {
     }
   }
 
+  const totalItemsPerCoffee = ((attributes.data.price as number) * (attributes.data.amount as number)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
   const coffeeResumeImage = `http://coffee-strapi:1337${attributes.data.image}`;
 
   return (
@@ -83,7 +84,7 @@ export default function ProductResumeCard(attributes: resumeActionOrderType) {
         </div>
       </div>
       <span className="font-Roboto text-base font-bold text-base-text">
-        R${String((attributes.data.price as number) *  (attributes.data.amount as number)).padEnd(4, "0").replace(".", ",")}
+        R${String(totalItemsPerCoffee).padEnd(4, "0").replace(".", ",")}
       </span>
     </section>
   );
