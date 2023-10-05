@@ -50,18 +50,18 @@ export interface productOrderType {
 }
 
 export interface order {
-  id: number;
   products: productOrderType[];
   address: addressType;
   payment: string;
 }
 
 export interface addressType {
-  cep: number;
+  cep: string;
   rua: string;
-  numero: number;
+  numero: string;
   complemento: string;
   bairro: string;
   cidade: string;
   uf: string;
+  payment?: string;
 }

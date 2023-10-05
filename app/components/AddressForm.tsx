@@ -1,4 +1,6 @@
 "use client";
+import { addressType, order } from "@/utils/models";
+import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Bank,
   CreditCard,
@@ -6,13 +8,40 @@ import {
   MapPinLine,
   Money,
 } from "@phosphor-icons/react";
+import { useContext } from "react";
+import { OrderContext } from "@/context/OrderContext";
+import { newOrderRegister } from "@/services/coffeeServices";
 
 export default function AddressForm() {
+  const { productsState } = useContext(OrderContext);
+  const { register, handleSubmit } = useForm<addressType>();
+  const onSubmit: SubmitHandler<addressType> = (data) => {
+    const orderData: order = {
+      products: [...productsState],
+      address: {
+        cep: data.cep,
+        rua: data.rua,
+        numero: data.numero,
+        complemento: data.complemento,
+        bairro: data.bairro,
+        cidade: data.cidade,
+        uf: data.uf,
+      },
+      payment: data.payment as string,
+    };
+
+    newOrderRegister(orderData);
+  };
+
   return (
-    <form action="" className="flex flex-col gap-3 w-[42rem]">
+    <form
+      id="address-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-3 w-[42rem]"
+    >
       <section className="flex flex-col p-10 justify-start gap-8 rounded-md bg-base-card">
         <div className="flex items-start gap-2 self-stretch">
-          <div className="">
+          <div>
             <MapPinLine size={22} color="#C47F17" />
           </div>
           <div className="flex flex-col">
@@ -28,21 +57,25 @@ export default function AddressForm() {
           <input
             className="flex w-52 p-3 items-center gap-4 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
             type="text"
+            {...register("cep", { required: true, minLength: 2 })}
             placeholder="CEP"
           />
           <input
             className="flex p-3 items-center gap-1 self-stretch bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
             type="text"
+            {...register("rua", { required: true, minLength: 2 })}
             placeholder="Rua"
           />
           <div className="flex items-center gap-3 self-stretch">
             <input
               type="text"
+              {...register("numero", { required: true, minLength: 2 })}
               placeholder="Número"
               className="p-3 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
             />
             <input
               type="text"
+              {...register("complemento", { required: false })}
               placeholder="Complemento (Opcional)"
               className="basis-full p-3 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
             />
@@ -50,16 +83,19 @@ export default function AddressForm() {
           <div className="flex items-center gap-3 self-stretch">
             <input
               type="text"
+              {...register("bairro", { required: true, minLength: 2 })}
               placeholder="Bairro"
               className="p-3 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
             />
             <input
               type="text"
+              {...register("cidade", { required: true, minLength: 2 })}
               placeholder="Cidade"
               className="basis-full p-3 bg-base-input outline-0 rounded border border-base-button focus:border-yellow-dark"
             />
             <input
               type="text"
+              {...register("uf", { required: true, minLength: 2 })}
               placeholder="UF"
               className="w-[60px] p-3 bg-base-input outline-0 rounded border border-base-button focus:border-yellow-dark"
             />
@@ -67,7 +103,11 @@ export default function AddressForm() {
         </div>
       </section>
 
-      <section className="flex flex-col p-10 items-start gap-8 self-stretch rounded-md bg-base-card">
+      <section
+        id="payment-form"
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col p-10 items-start gap-8 self-stretch rounded-md bg-base-card"
+      >
         <div className="flex">
           <div>
             <CurrencyDollar size={22} fill="#8047F8" />
@@ -83,7 +123,12 @@ export default function AddressForm() {
         </div>
         <fieldset className="flex justify-center gap-3 items-center self-stretch">
           <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
-            <input className="w-0 opacity-0" type="radio" name="radio" />
+            <input
+              className="w-0 opacity-0"
+              type="radio"
+              value="cartão de crédito"
+              {...register("payment", { required: true })}
+            />
             <CreditCard size={16} fill="#8047F8" />
             <span className="font-Roboto text-xs text-base-text uppercase">
               cartão de crédito
@@ -91,7 +136,12 @@ export default function AddressForm() {
           </label>
 
           <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
-            <input className="w-0 opacity-0" type="radio" name="radio" />
+            <input
+              className="w-0 opacity-0"
+              type="radio"
+              value="cartão de débito"
+              {...register("payment", { required: true })}
+            />
             <Bank size={16} fill="#8047F8" />
             <span className="font-Roboto text-xs text-base-text uppercase">
               cartão de débito
@@ -99,7 +149,12 @@ export default function AddressForm() {
           </label>
 
           <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
-            <input className="w-0 opacity-0" type="radio" name="radio" />
+            <input
+              className="w-0 opacity-0"
+              type="radio"
+              value="dinheiro"
+              {...register("payment", { required: true })}
+            />
             <Money size={16} fill="#8047F8" />
             <span className="font-Roboto text-xs text-base-text uppercase">
               dinheiro

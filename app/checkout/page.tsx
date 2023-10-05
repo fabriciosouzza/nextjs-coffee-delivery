@@ -20,7 +20,7 @@ export default function Checkout() {
         <h4 className="font-Baloo_2 text-lg font-bold text-base-subtitle">
           Complete seu pedido
         </h4>
-        <AddressForm />
+          <AddressForm />
       </div>
 
       <div className="mb-14">
@@ -80,7 +80,11 @@ export default function Checkout() {
               </span>
             </div>
           </div>
-          <button className="flex justify-center items-center py-3 px-2 gap-1 self-stretch rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase">
+          <button
+            form="address-form"
+            type="submit"
+            className="flex justify-center items-center py-3 px-2 gap-1 self-stretch rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase"
+          >
             confirmar pedido
           </button>
         </div>

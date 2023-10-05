@@ -1,4 +1,4 @@
-import { Product } from "@/utils/models";
+import { Product, order } from "@/utils/models";
 
 
 export async function listCoffees(): Promise<Product[] | undefined>  {
@@ -15,5 +15,29 @@ export async function listCoffees(): Promise<Product[] | undefined>  {
     }
   } catch (error) {
     throw error;
+  }
+}
+
+export async function newOrderRegister(data: order) {
+  try {
+    const addOrderReq = await fetch(
+      "http://localhost:1337/api/histories?populate=*", 
+      {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`
+      },
+      body: JSON.stringify({
+        data: data
+      }),
+    });
+    if (addOrderReq.ok) {
+      const coffeeData = await addOrderReq.json();
+      return console.log(coffeeData);   
+  }
+  } catch (error) {
+    throw error;
+    
   }
 }

@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto, Baloo_2 } from "next/font/google";
 import Navbar from "./components/Navbar";
-import OrderContextProvider, { OrderContext } from "@/context/OrderContext";
+import OrderContextProvider from "@/context/OrderContext";
 
 const roboto = Roboto({
   subsets: ["latin"],
