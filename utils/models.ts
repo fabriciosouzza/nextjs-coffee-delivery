@@ -50,9 +50,15 @@ export interface productOrderType {
 }
 
 export interface order {
-  products: productOrderType[];
+  products: productOrderTypeToFetch[];
   address: addressType;
   payment: string;
+}
+
+export interface productOrderTypeToFetch {
+  coffeeId: string
+  price: number
+  amount: number
 }
 
 export interface addressType {
@@ -64,4 +70,10 @@ export interface addressType {
   cidade: string;
   uf: string;
   payment?: string;
+}
+
+
+ export interface ProductCardProps {
+  id: number;
+  data: productAttributes;
 }

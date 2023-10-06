@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import AddressForm from "../components/AddressForm";
-import ProductResumeCard from "../components/ProductResumeCard";
+import ResumeCard from "../components/ResumeCard";
 import { OrderContext } from "@/context/OrderContext";
 
 export default function Checkout() {
@@ -31,7 +31,7 @@ export default function Checkout() {
           <div className="overflow-y-auto max-h-[30.5rem]">
             {productsState.map((product) => (
               <>
-                <ProductResumeCard key={product.id} data={product} />
+                <ResumeCard key={product.id} data={product} />
                 <hr className="stroke-1 stroke-base-button self-stretch h-0 mb-4" />
               </>
             ))}

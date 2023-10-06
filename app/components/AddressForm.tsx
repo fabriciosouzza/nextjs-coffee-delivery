@@ -13,11 +13,11 @@ import { OrderContext } from "@/context/OrderContext";
 import { newOrderRegister } from "@/services/coffeeServices";
 
 export default function AddressForm() {
-  const { productsState } = useContext(OrderContext);
+  const { productsToFetch } = useContext(OrderContext);
   const { register, handleSubmit } = useForm<addressType>();
   const onSubmit: SubmitHandler<addressType> = (data) => {
     const orderData: order = {
-      products: [...productsState],
+      products: [...productsToFetch],
       address: {
         cep: data.cep,
         rua: data.rua,
