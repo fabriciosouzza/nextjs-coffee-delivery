@@ -1,7 +1,10 @@
-"use client";
 import coffeeImage from "public/home-coffee-image.png";
-import { Coffee, Package, ShoppingCart, Timer } from "@phosphor-icons/react";
+// import { Coffee, Package, ShoppingCart, Timer } from "@phosphor-icons/react";
 import Image from "next/image";
+import { ShoppingCartSimple } from "@phosphor-icons/react/dist/ssr/ShoppingCartSimple";
+import { Package } from "@phosphor-icons/react/dist/ssr/Package";
+import { Timer } from "@phosphor-icons/react/dist/ssr/Timer";
+import { Coffee } from "@phosphor-icons/react/dist/ssr/Coffee";
 
 export default function IntroSection() {
   return (
@@ -23,7 +26,7 @@ export default function IntroSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <span className="flex items-center gap-3">
               <span className="flex justify-center items-center gap-2 p-2 rounded-full bg-yellow-dark">
-                <ShoppingCart size={16} color="#f2f2f2" weight="fill" />
+                <ShoppingCartSimple size={16} color="#f2f2f2" weight="fill" />
               </span>
               Compra simples e segura
             </span>

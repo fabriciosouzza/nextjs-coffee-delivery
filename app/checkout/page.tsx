@@ -15,8 +15,8 @@ export default function Checkout() {
   const totalOrder = totalItems + deliveryFee;
 
   return (
-    <section className="container mx-auto flex justify-evenly mt-12">
-      <div className="flex flex-col">
+    <section className="container mx-auto flex justify-between px-4 mt-12">
+      <div className="flex flex-col mb-10">
         <h4 className="font-Baloo_2 text-lg font-bold text-base-subtitle">
           Complete seu pedido
         </h4>
@@ -83,7 +83,7 @@ export default function Checkout() {
           <button
             form="address-form"
             type="submit"
-            className="flex justify-center items-center py-3 px-2 gap-1 self-stretch rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase"
+            className="flex justify-center items-center py-3 px-2 gap-1 self-stretch rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase hover:bg-yellow-dark"
           >
             confirmar pedido
           </button>

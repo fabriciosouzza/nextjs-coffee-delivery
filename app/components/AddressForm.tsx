@@ -1,5 +1,5 @@
 "use client";
-import { addressType, order } from "@/utils/models";
+import { order, registrationType } from "@/utils/models";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Bank,
@@ -7,6 +7,7 @@ import {
   CurrencyDollar,
   MapPinLine,
   Money,
+  UserList,
 } from "@phosphor-icons/react";
 import { useContext } from "react";
 import { OrderContext } from "@/context/OrderContext";
@@ -14,9 +15,13 @@ import { newOrderRegister } from "@/services/coffeeServices";
 
 export default function AddressForm() {
   const { productsToFetch } = useContext(OrderContext);
-  const { register, handleSubmit } = useForm<addressType>();
-  const onSubmit: SubmitHandler<addressType> = (data) => {
+  const { register, handleSubmit, reset } = useForm<registrationType>();
+  const onSubmit: SubmitHandler<registrationType> = (data) => {
     const orderData: order = {
+      user: {
+        name: data.username as string,
+        email: data.email as string
+      },
       products: [...productsToFetch],
       address: {
         cep: data.cep,
@@ -31,6 +36,7 @@ export default function AddressForm() {
     };
 
     newOrderRegister(orderData);
+    reset()
   };
 
   return (
@@ -39,6 +45,34 @@ export default function AddressForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-3 w-[42rem]"
     >
+      <section className="flex flex-col p-10 justify-start gap-8 rounded-md bg-base-card">
+        <div className="flex items-start gap-2 self-stretch">
+          <div>
+            <UserList size={22} color="#C47F17" />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-Roboto text-base text-base-subtitle">
+              Informações Pessoais
+            </span>
+            <span className="font-Roboto text-sm text-base-text">
+              Informe o seu nome e email que podemos entrar em contato
+            </span>
+          </div>
+        </div>
+        <input
+          type="text"
+          className="flex p-3 items-center gap-4 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
+          {...register("username", { required: true, minLength: 2 })}
+          placeholder="Nome"
+        />
+        <input
+          type="email"
+          className="flex p-3 items-center gap-4 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
+          {...register("email", { required: true, minLength: 2 })}
+          placeholder="Email"
+        />
+      </section>
+
       <section className="flex flex-col p-10 justify-start gap-8 rounded-md bg-base-card">
         <div className="flex items-start gap-2 self-stretch">
           <div>

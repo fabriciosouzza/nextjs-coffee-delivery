@@ -50,18 +50,26 @@ export interface productOrderType {
 }
 
 export interface order {
+  user: userOrderType;
   products: productOrderTypeToFetch[];
-  address: addressType;
+  address: registrationType;
   payment: string;
 }
 
-export interface productOrderTypeToFetch {
-  coffeeId: string
-  price: number
-  amount: number
+interface userOrderType {
+  name: string;
+  email: string;
 }
 
-export interface addressType {
+export interface productOrderTypeToFetch {
+  coffeeId: string;
+  price: number;
+  amount: number;
+}
+
+export interface registrationType {
+  username?: string;
+  email?: string;
   cep: string;
   rua: string;
   numero: string;
@@ -72,8 +80,7 @@ export interface addressType {
   payment?: string;
 }
 
-
- export interface ProductCardProps {
+export interface ProductCardProps {
   id: number;
   data: productAttributes;
 }

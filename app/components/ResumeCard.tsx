@@ -72,7 +72,7 @@ export default function ProductResumeCard(attributes: resumeActionOrderType) {
               </button>
             </div>
             <button
-              className="flex py-0 px-2 h-8 justify-center items-center gap-2 rounded-md bg-base-button"
+              className="flex py-0 px-2 h-8 justify-center items-center gap-2 rounded-md bg-base-button hover:bg-base-hover"
               onClick={handleDelete}
             >
               <Trash fill="#8047F8" size={16} />
