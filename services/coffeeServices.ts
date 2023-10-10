@@ -1,4 +1,4 @@
-import { Product, order } from "@/utils/models";
+import { Product, order, successOrderInfo } from "@/utils/models";
 
 
 export async function listCoffees(): Promise<Product[] | undefined>  {
@@ -33,11 +33,28 @@ export async function listCoffees(): Promise<Product[] | undefined>  {
       }),
     });
     if (addOrderReq.ok) {
-      const coffeeData = await addOrderReq.json();
-      return console.log(coffeeData);   
+      const orderReqData = await addOrderReq.json();
+      return orderReqData.data;   
   }
   } catch (error) {
     throw error;
     
   }
 }
+
+export async function getOrderById(searchId: number): Promise<successOrderInfo | undefined>  {
+  try {
+    const orderReq = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_STRAPI_URL}/api/histories/${searchId}?populate=*`,
+      {
+        headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}` }
+      }
+      ); 
+      if (orderReq.ok) {
+        const orderReqData = await orderReq.json();
+        return orderReqData.data as successOrderInfo;   
+      }
+    } catch (error) {
+      throw error;
+    }
+  }

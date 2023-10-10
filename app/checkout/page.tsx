@@ -20,7 +20,7 @@ export default function Checkout() {
         <h4 className="font-Baloo_2 text-lg font-bold text-base-subtitle">
           Complete seu pedido
         </h4>
-          <AddressForm />
+        <AddressForm key={'form-01'} total={totalOrder} />
       </div>
 
       <div className="mb-14">

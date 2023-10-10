@@ -12,15 +12,17 @@ import {
 import { useContext } from "react";
 import { OrderContext } from "@/context/OrderContext";
 import { newOrderRegister } from "@/services/coffeeServices";
+import { useRouter } from "next/navigation";
 
-export default function AddressForm() {
-  const { productsToFetch } = useContext(OrderContext);
+export default function AddressForm(total: any) {
+  const { productsToFetch, cleanProductList } = useContext(OrderContext);
+  const router = useRouter();
   const { register, handleSubmit, reset } = useForm<registrationType>();
   const onSubmit: SubmitHandler<registrationType> = (data) => {
     const orderData: order = {
       user: {
         name: data.username as string,
-        email: data.email as string
+        email: data.email as string,
       },
       products: [...productsToFetch],
       address: {
@@ -32,11 +34,20 @@ export default function AddressForm() {
         cidade: data.cidade,
         uf: data.uf,
       },
+      total: total | 0,
       payment: data.payment as string,
     };
 
-    newOrderRegister(orderData);
-    reset()
+    
+    const idValue = () => {
+      newOrderRegister(orderData).then((idToSuccess) => {
+        return router.push(`/success/${idToSuccess.id}`);
+      });
+    };
+    
+    idValue();
+    reset();
+    cleanProductList()
   };
 
   return (
@@ -160,7 +171,7 @@ export default function AddressForm() {
             <input
               className="w-0 opacity-0"
               type="radio"
-              value="cartão de crédito"
+              value="Cartão de Crédito"
               {...register("payment", { required: true })}
             />
             <CreditCard size={16} fill="#8047F8" />
@@ -173,7 +184,7 @@ export default function AddressForm() {
             <input
               className="w-0 opacity-0"
               type="radio"
-              value="cartão de débito"
+              value="Cartão de Débito"
               {...register("payment", { required: true })}
             />
             <Bank size={16} fill="#8047F8" />
@@ -186,7 +197,7 @@ export default function AddressForm() {
             <input
               className="w-0 opacity-0"
               type="radio"
-              value="dinheiro"
+              value="Dinheiro"
               {...register("payment", { required: true })}
             />
             <Money size={16} fill="#8047F8" />

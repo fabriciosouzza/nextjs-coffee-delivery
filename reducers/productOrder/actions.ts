@@ -5,6 +5,7 @@ export enum ActionTypes {
     INCREASE_PRODUCT_AMOUNT = 'INCREASE_PRODUCT_AMOUNT',
     DECREASE_PRODUCT_AMOUNT = 'DECREASE_PRODUCT_AMOUNT',
     DELETE_PRODUCT = 'DELETE_PRODUCT',
+    CLEAN_PRODUCT_LIST = 'CLEAN_PRODUCT_LIST'
 }
 
 export function addNewProductAction(orderAttributes: productOrderType) {
@@ -43,5 +44,11 @@ export function decreaseProductAction(orderAttributes: productOrderType) {
             id: orderAttributes.id,
             amount: orderAttributes.amount
         }
+    }
+}
+
+export function cleanProductionAction() {
+    return {
+        type: ActionTypes.CLEAN_PRODUCT_LIST
     }
 }

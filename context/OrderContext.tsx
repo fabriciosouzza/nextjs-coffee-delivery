@@ -1,6 +1,7 @@
-'use client'
+"use client";
 import {
   addNewProductAction,
+  cleanProductionAction,
   decreaseProductAction,
   deleteProductAction,
   increaseProductAction,
@@ -22,6 +23,7 @@ interface OrderContextType {
   deleteProduct: (orderAttributes: productOrderType) => void;
   increaseProductAmount: (orderAttributes: productOrderType) => void;
   decreaseProductAmount: (orderAttributes: productOrderType) => void;
+  cleanProductList: () => void;
 }
 
 export default function OrderContextProvider({
@@ -29,13 +31,15 @@ export default function OrderContextProvider({
 }: OrderContextProviderProps) {
   const [productsState, dispatch] = useReducer(productOrderReducer, []);
 
-  const productsToFetch: productOrderTypeToFetch[] = productsState.map((item) => {
-    return     {
-      coffeeId: `${item.id}`,
-      price: item.price,
-      amount: item.amount
+  const productsToFetch: productOrderTypeToFetch[] = productsState.map(
+    (item) => {
+      return {
+        coffeeId: `${item.id}`,
+        price: item.price,
+        amount: item.amount,
+      };
     }
-  })
+  );
 
   function addNewProduct(orderAttributes: productOrderType) {
     dispatch(addNewProductAction(orderAttributes));
@@ -50,8 +54,23 @@ export default function OrderContextProvider({
     dispatch(decreaseProductAction(orderAttributes));
   }
 
+  function cleanProductList() {
+    dispatch(cleanProductionAction())
+  }
+  
+
   return (
-    <OrderContext.Provider value={{ productsState, addNewProduct, deleteProduct, increaseProductAmount, decreaseProductAmount, productsToFetch }}>
+    <OrderContext.Provider
+      value={{
+        productsState,
+        productsToFetch,
+        addNewProduct,
+        deleteProduct,
+        increaseProductAmount,
+        decreaseProductAmount,
+        cleanProductList
+      }}
+    >
       {children}
     </OrderContext.Provider>
   );

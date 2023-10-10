@@ -41,10 +41,13 @@ export function productOrderReducer(state: productOrderType[], action: any) {
         }
         return productState;
       });
-      return updatedDecreasedState.filter((product) => (product.amount as number) > 0);
+      return updatedDecreasedState.filter(
+        (product) => (product.amount as number) > 0
+      );
     case ActionTypes.DELETE_PRODUCT:
       return state.filter((product) => product.id !== action.payload.id);
-
+    case ActionTypes.CLEAN_PRODUCT_LIST:
+      return [];
     default:
       return state;
   }

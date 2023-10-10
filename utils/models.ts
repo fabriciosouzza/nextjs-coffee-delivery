@@ -54,6 +54,7 @@ export interface order {
   products: productOrderTypeToFetch[];
   address: registrationType;
   payment: string;
+  total: number;
 }
 
 interface userOrderType {
@@ -83,4 +84,9 @@ export interface registrationType {
 export interface ProductCardProps {
   id: number;
   data: productAttributes;
+}
+
+export interface successOrderInfo {
+  id: number
+  attributes: order
 }
