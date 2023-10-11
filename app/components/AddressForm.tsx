@@ -64,6 +64,7 @@ const orderFormSchema = z.object({
 });
 
 type orderFormSchemaType = z.infer<typeof orderFormSchema>;
+type ufFormSchemaType = z.infer<typeof estados>
 
 export default function AddressForm(total: any) {
   const { productsToFetch, cleanProductList } = useContext(OrderContext);
@@ -72,6 +73,7 @@ export default function AddressForm(total: any) {
     register,
     handleSubmit,
     reset,
+    setValue,
     watch,
     formState: { errors },
   } = useForm<orderFormSchemaType>({
@@ -121,13 +123,18 @@ export default function AddressForm(total: any) {
       if (inputToWatch && inputToWatch.length == 8) {
         const dataToReturn = addressByCep(Number(inputToWatch)).then(
           (response) => {
+            setValue('rua', `${response.logradouro}`, { shouldValidate: true })
+            setValue('complemento', `${response.complemento}`, { shouldValidate: true })
+            setValue('bairro', `${response.bairro}`, { shouldValidate: true })
+            setValue('cidade', `${response.localidade}`, { shouldValidate: true })
+            setValue('uf', `${response.uf as ufFormSchemaType}`, { shouldValidate: true })
             return console.log(response);
           }
         );
       }
     }
     fetchAddress();
-  }, [inputToWatch]);
+  }, [inputToWatch, setValue]);
 
   return (
     <form
