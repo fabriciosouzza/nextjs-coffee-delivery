@@ -58,3 +58,21 @@ export async function getOrderById(searchId: number): Promise<successOrderInfo |
       throw error;
     }
   }
+
+
+  export async function getHistory(emailTofilter: string): Promise<successOrderInfo | undefined>  {
+    try {
+      const orderReq = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_STRAPI_URL}/api/histories?populate[products][populate][coffeeId][populate][tags]=*&filters[user][email]=${emailTofilter}`,
+        {
+          headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}` }
+        }
+        ); 
+        if (orderReq.ok) {
+          const historyReqData = await orderReq.json();
+          return historyReqData.data as successOrderInfo;   
+        }
+      } catch (error) {
+        throw error;
+      }
+    }

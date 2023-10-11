@@ -3,11 +3,14 @@ import deliveryImage from "@/public/delivery-image.png";
 import { MapPin } from "@phosphor-icons/react/dist/ssr/MapPin";
 import { Timer } from "@phosphor-icons/react/dist/ssr/Timer";
 import { CurrencyDollar } from "@phosphor-icons/react/dist/ssr/CurrencyDollar";
-import { getOrderById } from "@/services/coffeeServices";
+import { getHistory, getOrderById } from "@/services/coffeeServices";
+import HistoryTable from "@/app/components/HistoryTable";
 
 export default async function Success({ params }: { params: { id: number } }) {
+  const orderData = await getOrderById(params.id);
 
-  const orderData = await getOrderById(params.id)
+  const orderId = orderData ? orderData.attributes.user.email : "noreply@noreply"
+  const historyInfo = await getHistory(orderId)
 
   return (
     <main className="container mx-auto flex flex-col px-4 gap-10 mt-20">
@@ -27,10 +30,16 @@ export default async function Success({ params }: { params: { id: number } }) {
             </span>
             <div className="flex flex-col">
               <span className="font-Roboto text-base text-base-text">
-                Entrega em <span className="font-bold">Rua {orderData && orderData.attributes.address.rua}, {orderData && orderData.attributes.address.numero}</span>
+                Entrega em{" "}
+                <span className="font-bold">
+                  Rua {orderData && orderData.attributes.address.rua},{" "}
+                  {orderData && orderData.attributes.address.numero}
+                </span>
               </span>
               <span className="font-Roboto text-base text-base-text">
-              {orderData && orderData.attributes.address.bairro} - {orderData && orderData.attributes.address.cidade}, {orderData && orderData.attributes.address.uf}
+                {orderData && orderData.attributes.address.bairro} -{" "}
+                {orderData && orderData.attributes.address.cidade},{" "}
+                {orderData && orderData.attributes.address.uf}
               </span>
             </div>
           </div>
@@ -63,10 +72,13 @@ export default async function Success({ params }: { params: { id: number } }) {
         </div>
         <Image src={deliveryImage} width={492} height={293} alt="" />
       </section>
-
       <button className="flex justify-center items-center self-center mt-12 w-80 py-3 px-2 gap-1 rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase hover:bg-yellow-dark">
         meus pedidos
       </button>
+      <div>
+        <HistoryTable />
+        {`${JSON.stringify(historyInfo)}`}
+      </div>
     </main>
   );
 }
