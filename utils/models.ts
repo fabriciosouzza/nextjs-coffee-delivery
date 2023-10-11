@@ -90,3 +90,8 @@ export interface successOrderInfo {
   id: number
   attributes: order
 }
+
+export interface headerPinAddressType {
+  cidade: string
+  estado: string
+}

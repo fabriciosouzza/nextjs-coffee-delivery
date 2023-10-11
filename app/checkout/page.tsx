@@ -83,7 +83,8 @@ export default function Checkout() {
           <button
             form="address-form"
             type="submit"
-            className="flex justify-center items-center py-3 px-2 gap-1 self-stretch rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase hover:bg-yellow-dark"
+            disabled={productsState.length > 0 ? false : true}
+            className={`flex justify-center items-center py-3 px-2 gap-1 self-stretch rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase ${productsState.length > 0 ? "cursor-pointer" : "cursor-not-allowed"} hover:bg-yellow-dark`}
           >
             confirmar pedido
           </button>

@@ -7,8 +7,12 @@ import {
   increaseProductAction,
 } from "@/reducers/productOrder/actions";
 import { productOrderReducer } from "@/reducers/productOrder/reducer";
-import { productOrderType, productOrderTypeToFetch } from "@/utils/models";
-import { ReactNode, createContext, useReducer } from "react";
+import {
+  headerPinAddressType,
+  productOrderType,
+  productOrderTypeToFetch,
+} from "@/utils/models";
+import { ReactNode, createContext, useReducer, useState } from "react";
 
 export const OrderContext = createContext({} as OrderContextType);
 
@@ -19,6 +23,8 @@ interface OrderContextProviderProps {
 interface OrderContextType {
   productsState: productOrderType[];
   productsToFetch: productOrderTypeToFetch[];
+  headerPinAddressInfo: headerPinAddressType;
+  setHeaderPinAddressInfo: ({}: headerPinAddressType) => void;
   addNewProduct: (orderAttributes: productOrderType) => void;
   deleteProduct: (orderAttributes: productOrderType) => void;
   increaseProductAmount: (orderAttributes: productOrderType) => void;
@@ -30,6 +36,11 @@ export default function OrderContextProvider({
   children,
 }: OrderContextProviderProps) {
   const [productsState, dispatch] = useReducer(productOrderReducer, []);
+  const [headerPinAddressInfo, setHeaderPinAddressInfo] =
+    useState<headerPinAddressType>({
+      cidade: "",
+      estado: "",
+    });
 
   const productsToFetch: productOrderTypeToFetch[] = productsState.map(
     (item) => {
@@ -55,20 +66,21 @@ export default function OrderContextProvider({
   }
 
   function cleanProductList() {
-    dispatch(cleanProductionAction())
+    dispatch(cleanProductionAction());
   }
-  
 
   return (
     <OrderContext.Provider
       value={{
         productsState,
         productsToFetch,
+        headerPinAddressInfo,
         addNewProduct,
         deleteProduct,
         increaseProductAmount,
         decreaseProductAmount,
-        cleanProductList
+        cleanProductList,
+        setHeaderPinAddressInfo,
       }}
     >
       {children}

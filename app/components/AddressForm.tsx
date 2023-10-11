@@ -64,10 +64,10 @@ const orderFormSchema = z.object({
 });
 
 type orderFormSchemaType = z.infer<typeof orderFormSchema>;
-type ufFormSchemaType = z.infer<typeof estados>
+type ufFormSchemaType = z.infer<typeof estados>;
 
 export default function AddressForm(total: any) {
-  const { productsToFetch, cleanProductList } = useContext(OrderContext);
+  const { productsToFetch, cleanProductList, headerPinAddressInfo, setHeaderPinAddressInfo } = useContext(OrderContext);
   const router = useRouter();
   const {
     register,
@@ -121,20 +121,29 @@ export default function AddressForm(total: any) {
   useEffect(() => {
     async function fetchAddress() {
       if (inputToWatch && inputToWatch.length == 8) {
-        const dataToReturn = addressByCep(Number(inputToWatch)).then(
-          (response) => {
-            setValue('rua', `${response.logradouro}`, { shouldValidate: true })
-            setValue('complemento', `${response.complemento}`, { shouldValidate: true })
-            setValue('bairro', `${response.bairro}`, { shouldValidate: true })
-            setValue('cidade', `${response.localidade}`, { shouldValidate: true })
-            setValue('uf', `${response.uf as ufFormSchemaType}`, { shouldValidate: true })
-            return console.log(response);
-          }
-        );
+        addressByCep(Number(inputToWatch)).then((response) => {
+          setValue("rua", `${response.logradouro}`, { shouldValidate: true });
+          setValue("complemento", `${response.complemento}`, {
+            shouldValidate: true,
+          });
+          setValue("bairro", `${response.bairro}`, { shouldValidate: true });
+          setValue("cidade", `${response.localidade}`, {
+            shouldValidate: true,
+          });
+          setValue("uf", `${response.uf as ufFormSchemaType}`, {
+            shouldValidate: true,
+          });
+
+          setHeaderPinAddressInfo({
+            cidade: `${response.localidade}`,
+            estado:  `${response.uf}`
+          })
+          return console.log(response);
+        });
       }
     }
     fetchAddress();
-  }, [inputToWatch, setValue]);
+  }, [inputToWatch, setValue, setHeaderPinAddressInfo]);
 
   return (
     <form
