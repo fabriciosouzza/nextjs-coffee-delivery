@@ -1,9 +1,10 @@
+import { Product } from "@/utils/models";
 import IntroSection from "./components/IntroSection";
 import ProductCard from "./components/ProductCard";
 import { listCoffees } from "@/services/coffeeServices";
 
 export default async function Home() {
-  const coffees = await listCoffees()
+  const coffees = await listCoffees();
   return (
     <main>
       <IntroSection />
@@ -11,11 +12,16 @@ export default async function Home() {
         Nossos cafés
       </h3>
       <div className="container mx-auto px-4 mb-10">
-          <div className="grid grid-cols-1 gap-10 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {coffees && coffees.map((product) => (
-              <ProductCard key={product.id} id={product.id} data={product.attributes} />
+        <div className="grid grid-cols-1 gap-10 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {coffees &&
+            coffees.map((product: Product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                data={product.attributes}
+              />
             ))}
-          </div>
+        </div>
       </div>
     </main>
   );

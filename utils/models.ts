@@ -55,6 +55,7 @@ export interface order {
   address: registrationType;
   payment: string;
   total: number;
+  createdAt?: string;
 }
 
 interface userOrderType {
@@ -87,11 +88,11 @@ export interface ProductCardProps {
 }
 
 export interface successOrderInfo {
-  id: number
-  attributes: order
+  id: number;
+  attributes: order;
 }
 
 export interface headerPinAddressType {
-  cidade: string
-  estado: string
+  cidade: string;
+  estado: string;
 }

@@ -1,5 +1,5 @@
 "use client";
-import { order, registrationType } from "@/utils/models";
+import { order } from "@/utils/models";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Bank,
@@ -67,7 +67,9 @@ type orderFormSchemaType = z.infer<typeof orderFormSchema>;
 type ufFormSchemaType = z.infer<typeof estados>;
 
 export default function AddressForm(total: any) {
-  const { productsToFetch, cleanProductList, headerPinAddressInfo, setHeaderPinAddressInfo } = useContext(OrderContext);
+  const totalOrderValue = total.total
+  const { productsToFetch, cleanProductList, setHeaderPinAddressInfo } =
+    useContext(OrderContext);
   const router = useRouter();
   const {
     register,
@@ -96,7 +98,7 @@ export default function AddressForm(total: any) {
         cidade: data.cidade,
         uf: data.uf,
       },
-      total: total | 0,
+      total: totalOrderValue,
       payment: data.payment as string,
     };
 
@@ -111,34 +113,40 @@ export default function AddressForm(total: any) {
     cleanProductList();
   };
 
-  // const cepInfo = (cep: string) => {
-  //   addressByCep(cep).then((response) => {
-  //     return response
-  //   })
-  // }
-
   const inputToWatch = watch("cep");
   useEffect(() => {
     async function fetchAddress() {
-      if (inputToWatch && inputToWatch.length == 8) {
-        addressByCep(Number(inputToWatch)).then((response) => {
-          setValue("rua", `${response.logradouro}`, { shouldValidate: true });
-          setValue("complemento", `${response.complemento}`, {
-            shouldValidate: true,
-          });
-          setValue("bairro", `${response.bairro}`, { shouldValidate: true });
-          setValue("cidade", `${response.localidade}`, {
-            shouldValidate: true,
-          });
-          setValue("uf", `${response.uf as ufFormSchemaType}`, {
-            shouldValidate: true,
-          });
-
-          setHeaderPinAddressInfo({
-            cidade: `${response.localidade}`,
-            estado:  `${response.uf}`
-          })
-          return console.log(response);
+      const regex = new RegExp(/[\D]/gm)
+      const inputClean = inputToWatch && inputToWatch.replace(regex, '')
+      if (inputClean && inputClean.length == 8) {
+        addressByCep((inputClean)).then((response) => {
+          if ('erro' in response) {
+            // reset({
+            //   rua: "",
+            //   complemento: "",
+            //   bairro: "",
+            //   cidade: "",
+            //   uf: undefined
+            // })
+            return console.log(response);
+          } else {
+            setValue("rua", `${response.logradouro}`, { shouldValidate: true });
+            setValue("complemento", `${response.complemento}`, {
+              shouldValidate: true,
+            });
+            setValue("bairro", `${response.bairro}`, { shouldValidate: true });
+            setValue("cidade", `${response.localidade}`, {
+              shouldValidate: true,
+            });
+            setValue("uf", `${response.uf as ufFormSchemaType}`, {
+              shouldValidate: true,
+            });
+  
+            setHeaderPinAddressInfo({
+              cidade: `${response.localidade}`,
+              estado: `${response.uf}`,
+            });
+          }
         });
       }
     }

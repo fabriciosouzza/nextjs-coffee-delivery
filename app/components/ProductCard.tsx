@@ -3,7 +3,6 @@ import Image from "next/image";
 import AmountHandler from "./AmountHandler";
 
 export default function ProductCard({ id, data }: ProductCardProps) {
-
   const coffeeImage = `http://coffee-strapi:1337${data.image.data.attributes.url}`;
 
   return (

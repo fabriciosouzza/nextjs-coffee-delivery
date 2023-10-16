@@ -32,7 +32,12 @@ export default function ProductResumeCard(attributes: resumeActionOrderType) {
     }
   }
 
-  const totalItemsPerCoffee = ((attributes.data.price as number) * (attributes.data.amount as number)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
+  const totalItemsPerCoffee = (
+    (attributes.data.price as number) * (attributes.data.amount as number)
+  ).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
   const coffeeResumeImage = `http://coffee-strapi:1337${attributes.data.image}`;
 
   return (

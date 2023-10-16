@@ -1,11 +1,11 @@
-'use client';
+"use client";
 import { OrderContext } from "@/context/OrderContext";
 import { ShoppingCart } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useContext } from "react";
 
 export default function ShoppingCartButton() {
-    const { productsState } = useContext(OrderContext);
+  const { productsState } = useContext(OrderContext);
   return (
     <div className="flex">
       <span className="p-2 bg-yellow-light rounded-md">

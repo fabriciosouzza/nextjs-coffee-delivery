@@ -5,8 +5,6 @@ import ShoppingCartButton from "./ShoppingCartButton";
 import AddressHeaderPin from "./AddressHeaderPin";
 
 export default function Navbar() {
-
-
   return (
     <header className="container mx-auto px-4 h-10 my-8 flex justify-between">
       <Link href="/">

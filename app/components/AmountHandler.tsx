@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { OrderContext } from "@/context/OrderContext";
 import { ProductCardProps } from "@/utils/models";
 import { Minus, Plus, ShoppingCartSimple } from "@phosphor-icons/react";

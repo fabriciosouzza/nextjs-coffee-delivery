@@ -4,13 +4,25 @@ import { MapPin } from "@phosphor-icons/react/dist/ssr/MapPin";
 import { Timer } from "@phosphor-icons/react/dist/ssr/Timer";
 import { CurrencyDollar } from "@phosphor-icons/react/dist/ssr/CurrencyDollar";
 import { getHistory, getOrderById } from "@/services/coffeeServices";
-import HistoryTable from "@/app/components/HistoryTable";
+import HistoryItem from "@/app/components/HistoryItem";
+import { successOrderInfo } from "@/utils/models";
 
 export default async function Success({ params }: { params: { id: number } }) {
   const orderData = await getOrderById(params.id);
 
-  const orderId = orderData ? orderData.attributes.user.email : "noreply@noreply"
-  const historyInfo = await getHistory(orderId)
+  const orderId = orderData
+    ? orderData.attributes.user.email
+    : "noreply@noreply";
+  const historyInfo = await getHistory(orderId);
+
+  let propToToggle = 'hidden';
+  const handleToggleHistory = () => {
+    if (propToToggle == 'flex') {
+      propToToggle = 'hidden'
+    } else {
+      propToToggle = 'flex'
+    }
+  }
 
   return (
     <main className="container mx-auto flex flex-col px-4 gap-10 mt-20">
@@ -72,12 +84,16 @@ export default async function Success({ params }: { params: { id: number } }) {
         </div>
         <Image src={deliveryImage} width={492} height={293} alt="" />
       </section>
-      <button className="flex justify-center items-center self-center mt-12 w-80 py-3 px-2 gap-1 rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase hover:bg-yellow-dark">
+      <h3 className="font-Baloo_2 text-4xl font-extrabold text-yellow-dark self-center mt-12">
+          Meus Pedidos
+        </h3>
+      {/* <button  className="flex justify-center items-center self-center mt-12 w-80 py-3 px-2 gap-1 rounded-md bg-yellow font-Roboto text-sm font-bold text-white uppercase hover:bg-yellow-dark">
         meus pedidos
-      </button>
-      <div>
-        <HistoryTable />
-        {`${JSON.stringify(historyInfo)}`}
+      </button> */}
+      <div className={`container mx-auto flex flex-col px-4 mt-12 mb-10 gap-1 overflow-y-auto max-h-[30.5rem]`}>
+        {historyInfo && historyInfo.map((orderHistoryItem: successOrderInfo) => (
+          <HistoryItem key={orderHistoryItem.id} data={orderHistoryItem} />
+          ))}
       </div>
     </main>
   );
