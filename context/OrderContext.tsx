@@ -22,8 +22,10 @@ interface OrderContextProviderProps {
 
 interface OrderContextType {
   productsState: productOrderType[];
+  tagsToFilter: string[];
   productsToFetch: productOrderTypeToFetch[];
   headerPinAddressInfo: headerPinAddressType;
+  setTagsToFilter: ([]:any) => void;
   setHeaderPinAddressInfo: ({}: headerPinAddressType) => void;
   addNewProduct: (orderAttributes: productOrderType) => void;
   deleteProduct: (orderAttributes: productOrderType) => void;
@@ -36,6 +38,7 @@ export default function OrderContextProvider({
   children,
 }: OrderContextProviderProps) {
   const [productsState, dispatch] = useReducer(productOrderReducer, []);
+  const [tagsToFilter, setTagsToFilter] = useState([]);
   const [headerPinAddressInfo, setHeaderPinAddressInfo] =
     useState<headerPinAddressType>({
       cidade: "",
@@ -75,8 +78,10 @@ export default function OrderContextProvider({
         productsState,
         productsToFetch,
         headerPinAddressInfo,
+        tagsToFilter,
         addNewProduct,
         deleteProduct,
+        setTagsToFilter,
         increaseProductAmount,
         decreaseProductAmount,
         cleanProductList,

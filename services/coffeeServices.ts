@@ -1,4 +1,4 @@
-import { Product, order, successOrderInfo } from "@/utils/models";
+import { Product, order, productTags, successOrderInfo } from "@/utils/models";
 
 export async function listCoffees(): Promise<Product[] | any> {
   try {
@@ -16,6 +16,27 @@ export async function listCoffees(): Promise<Product[] | any> {
     }
     const coffeeData = await listCoffeesReq.json();
     return coffeeData.data as Product[];
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function tagList(): Promise< productTags | any> {
+  try {
+    const tagListReq = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_STRAPI_URL}/api/tags?populate=*`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
+        },
+      }
+    );
+    if (!tagListReq.ok) {
+      const error = tagListReq;
+      throw error;
+    }
+    const coffeeData = await tagListReq.json();
+    return coffeeData.data as productTags[];
   } catch (error) {
     throw error;
   }

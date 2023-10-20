@@ -36,3 +36,16 @@
     @apply bg-purple-light border border-purple p-[15px];
   }
 }
+
+@layer components {
+  .check-label:has(input:checked) {
+    @apply bg-yellow-light border border-yellow-dark py-[7px] px-[11px];
+  }
+}
+
+.disable-select {
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}

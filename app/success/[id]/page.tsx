@@ -15,14 +15,14 @@ export default async function Success({ params }: { params: { id: number } }) {
     : "noreply@noreply";
   const historyInfo = await getHistory(orderId);
 
-  let propToToggle = 'hidden';
-  const handleToggleHistory = () => {
-    if (propToToggle == 'flex') {
-      propToToggle = 'hidden'
-    } else {
-      propToToggle = 'flex'
-    }
-  }
+  // let propToToggle = 'hidden';
+  // const handleToggleHistory = () => {
+  //   if (propToToggle == 'flex') {
+  //     propToToggle = 'hidden'
+  //   } else {
+  //     propToToggle = 'flex'
+  //   }
+  // }
 
   return (
     <main className="container mx-auto flex flex-col px-4 gap-10 mt-20">

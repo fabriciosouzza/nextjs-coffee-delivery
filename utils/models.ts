@@ -11,7 +11,7 @@ export interface productAttributes {
   image: productImage;
 }
 
-interface productTags {
+export interface productTags {
   data: tagsInfo[];
 }
 
@@ -95,4 +95,12 @@ export interface successOrderInfo {
 export interface headerPinAddressType {
   cidade: string;
   estado: string;
+}
+
+export interface ProductPropsDataType {
+  coffees: Product[]
+}
+
+export interface ProductTagsPropsDataType {
+  tags: tagsInfo[]
 }

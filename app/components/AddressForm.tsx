@@ -9,7 +9,7 @@ import {
   Money,
   UserList,
 } from "@phosphor-icons/react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { OrderContext } from "@/context/OrderContext";
 import { newOrderRegister } from "@/services/coffeeServices";
 import { useRouter } from "next/navigation";
@@ -67,7 +67,7 @@ type orderFormSchemaType = z.infer<typeof orderFormSchema>;
 type ufFormSchemaType = z.infer<typeof estados>;
 
 export default function AddressForm(total: any) {
-  const totalOrderValue = total.total
+  const totalOrderValue = total.total;
   const { productsToFetch, cleanProductList, setHeaderPinAddressInfo } =
     useContext(OrderContext);
   const router = useRouter();
@@ -75,12 +75,13 @@ export default function AddressForm(total: any) {
     register,
     handleSubmit,
     reset,
+    resetField,
     setValue,
     watch,
     formState: { errors },
   } = useForm<orderFormSchemaType>({
     resolver: zodResolver(orderFormSchema),
-    mode: "onTouched",
+    mode: "onTouched"
   });
   const onSubmit: SubmitHandler<orderFormSchemaType> = (data) => {
     const orderData: order = {
@@ -113,23 +114,34 @@ export default function AddressForm(total: any) {
     cleanProductList();
   };
 
+  // let cepNotFoundBoolean = useRef(false)
+
   const inputToWatch = watch("cep");
   useEffect(() => {
     async function fetchAddress() {
-      const regex = new RegExp(/[\D]/gm)
-      const inputClean = inputToWatch && inputToWatch.replace(regex, '')
+      const regex = new RegExp(/[\D]/gm);
+      const inputClean = inputToWatch && inputToWatch.replace(regex, "");
       if (inputClean && inputClean.length == 8) {
-        addressByCep((inputClean)).then((response) => {
-          if ('erro' in response) {
-            // reset({
-            //   rua: "",
-            //   complemento: "",
-            //   bairro: "",
-            //   cidade: "",
-            //   uf: undefined
-            // })
+        addressByCep(inputClean).then((response) => {
+          if ("erro" in response) {
+            alert("CEP não encontrado")
+            // cepNotFoundBoolean.current = true
+            setValue("rua", ``, { shouldValidate: true });
+            setValue("complemento", ``, {
+              shouldValidate: true,
+            });
+            setValue("bairro", ``, { shouldValidate: true });
+            setValue("cidade", ``, {
+              shouldValidate: true,
+            });
+
+            setHeaderPinAddressInfo({
+              cidade: ``,
+              estado: ``,
+            });
             return console.log(response);
           } else {
+            // cepNotFoundBoolean.current = false
             setValue("rua", `${response.logradouro}`, { shouldValidate: true });
             setValue("complemento", `${response.complemento}`, {
               shouldValidate: true,
@@ -141,7 +153,7 @@ export default function AddressForm(total: any) {
             setValue("uf", `${response.uf as ufFormSchemaType}`, {
               shouldValidate: true,
             });
-  
+
             setHeaderPinAddressInfo({
               cidade: `${response.localidade}`,
               estado: `${response.uf}`,
@@ -151,7 +163,7 @@ export default function AddressForm(total: any) {
       }
     }
     fetchAddress();
-  }, [inputToWatch, setValue, setHeaderPinAddressInfo]);
+  }, [inputToWatch, setValue, setHeaderPinAddressInfo, resetField]);
 
   return (
     <form
@@ -180,7 +192,7 @@ export default function AddressForm(total: any) {
           placeholder="Nome"
         />
         {errors.username && (
-          <p className="text-sm text-red-600">{errors.username.message}</p>
+          <p className="text-xs -mt-5 text-red-600">{errors.username.message}</p>
         )}
         <input
           type="email"
@@ -189,7 +201,7 @@ export default function AddressForm(total: any) {
           placeholder="Email"
         />
         {errors.email && (
-          <p className="text-sm text-red-600">{errors.email.message}</p>
+          <p className="text-xs -mt-5 text-red-600">{errors.email.message}</p>
         )}
       </section>
 
@@ -211,12 +223,16 @@ export default function AddressForm(total: any) {
           <input
             className="flex w-52 p-3 items-center gap-4 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
             type="text"
+            id="c12e34p56"
             {...register("cep")}
             placeholder="CEP"
           />
           {errors.cep && (
-            <p className="text-sm text-red-600">{errors.cep.message}</p>
+            <p className="text-xs -mt-4 text-red-600">{errors.cep.message}</p>
           )}
+          {/* {cepNotFoundBoolean.current && (
+            <p className="text-xs -mt-4 text-red-600">CEP não encontrado</p>
+          )} */}
           <input
             className="flex p-3 items-center gap-1 self-stretch bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
             type="text"
@@ -224,7 +240,7 @@ export default function AddressForm(total: any) {
             placeholder="Rua"
           />
           {errors.rua && (
-            <p className="text-sm text-red-600">{errors.rua.message}</p>
+            <p className="text-xs -mt-4 text-red-600">{errors.rua.message}</p>
           )}
           <div className="flex items-center gap-3 self-stretch">
             <div className="flex flex-col self-stretch basis-full">
@@ -245,7 +261,7 @@ export default function AddressForm(total: any) {
             </div>
           </div>
           {errors.numero && (
-            <p className="text-sm text-red-600">{errors.numero.message}</p>
+            <p className="text-xs -mt-4 text-red-600">{errors.numero.message}</p>
           )}
 
           <div className="flex items-center gap-3 self-stretch">
@@ -263,9 +279,10 @@ export default function AddressForm(total: any) {
             />
             <select
               {...register("uf")}
+              defaultValue={"UF"}
               className="w-[70px] p-3 bg-base-input outline-0 rounded border border-base-button appearance-none focus:border-yellow-dark"
             >
-              <option disabled selected hidden>
+              <option disabled hidden>
                 UF
               </option>
               {estados.options.map((estado) => (
@@ -278,13 +295,13 @@ export default function AddressForm(total: any) {
         </div>
         <div className="flex flex-col">
           {errors.bairro && (
-            <p className="text-sm text-red-600">{errors.bairro.message}</p>
+            <p className="text-xs -mt-5 text-red-600">{errors.bairro.message}</p>
           )}
           {errors.cidade && (
-            <p className="text-sm text-red-600">{errors.cidade.message}</p>
+            <p className="text-xs text-red-600">{errors.cidade.message}</p>
           )}
           {errors.uf && (
-            <p className="text-sm text-red-600">{"Preencha o campo 'UF'"}</p>
+            <p className="text-xs text-red-600">{"Preencha o campo 'UF'"}</p>
           )}
         </div>
       </section>

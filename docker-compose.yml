@@ -1,0 +1,46 @@
+version: '3.8'
+
+networks:
+  coffee-network:
+    driver: bridge
+
+services:
+  coffee-delivery:
+    image: node
+    container_name: coffee-delivery
+    ports: "3000:3000"
+    networks:
+      - coffee-network
+    volumes:
+      - /home/fabricio/ignite-rocket/coffeeDelivery:/app
+
+  coffee-strapi:
+    image: strapi/strapi
+    container_name: coffee-strapi
+    ports: "1337:1337"
+    networks:
+      - coffee-network
+    volumes:
+      - /home/fabricio/ignite-rocket/depCD/strapiFolder:/app
+    environment:
+      DATABASE_CLIENT: mysql
+      DATABASE_HOST: coffee-mysql
+      DATABASE_PORT: 3306
+      DATABASE_NAME: coffeeProv
+      DATABASE_USERNAME: coffeeApp
+      DATABASE_PASSWORD: senha
+      DATABASE_SSL: false
+
+  coffee-mysql:
+    image: mysql/mysql-server
+    container_name: coffee-mysql
+    ports: "3306:3306"
+    networks:
+      - coffee-network
+    volumes:
+      - /home/fabricio/ignite-rocket/depCD/DB:/app
+    environment:
+       MYSQL_ROOT_PASSWORD: senha
+       MYSQL_DATABASE: coffeeProv
+       MYSQL_USER: coffeeApp
+       MYSQL_PASSWORD: senha
