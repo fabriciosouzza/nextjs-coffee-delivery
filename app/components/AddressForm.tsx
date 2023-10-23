@@ -9,7 +9,7 @@ import {
   Money,
   UserList,
 } from "@phosphor-icons/react";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { OrderContext } from "@/context/OrderContext";
 import { getPaymentList, newOrderRegister } from "@/services/coffeeServices";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addressByCep } from "@/services/cepServices";
 import InputMask from "react-input-mask";
+import Image from "next/image";
 
 const estados = z.enum([
   "AC",
@@ -128,7 +129,6 @@ export default function AddressForm(total: any) {
   }, []);
 
   const inputToWatch = watch("cep");
-  console.log(inputToWatch);
   useEffect(() => {
     async function fetchAddress() {
       const regex = new RegExp(/[\D]/gm);
@@ -151,7 +151,6 @@ export default function AddressForm(total: any) {
               cidade: ``,
               estado: ``,
             });
-            return console.log(response);
           } else {
             // cepNotFoundBoolean.current = false
             setValue("rua", `${response.logradouro}`, { shouldValidate: true });
@@ -335,20 +334,19 @@ export default function AddressForm(total: any) {
             </span>
           </div>
         </div>
-        <fieldset className="flex  gap-3 items-center self-stretch flex-wrap">
+        <fieldset className="flex justify-center gap-3 items-center self-stretch flex-wrap">
           {paymentList &&
             paymentList.map((paymentItem) => {
-              const markup = paymentItem.attributes.icon
+              console.log(paymentItem.attributes.icon.data.attributes.url)
               return (
-                <label key={paymentItem.id} className="radio-label flex w-44 p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
+                <label key={paymentItem.id} className="radio-label flex w-48 p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
                   <input
                     className="w-0 opacity-0"
                     type="radio"
                     value={paymentItem.id}
                     {...register("payment")}
                   />
-                  {/* {paymentItem.attributes.icon} */}
-                  <div dangerouslySetInnerHTML={{__html: markup}} />
+                  <Image src={`http://127.0.0.1:1337${paymentItem.attributes.icon.data.attributes.url}`} width={16} height={16} alt=""/>
                   <span className="font-Roboto text-xs text-base-text uppercase">
                     {paymentItem.attributes.paymentForm}
                   </span>

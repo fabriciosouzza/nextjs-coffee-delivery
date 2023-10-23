@@ -112,5 +112,18 @@ export interface PaymentListProps {
 
 interface PaymentListAttributes {
   paymentForm: string
-  icon: string
+  icon: PaymentIconData
+}
+
+interface PaymentIconData {
+  data: PaymentIconProps
+}
+
+interface PaymentIconProps{
+  id: number
+  attributes: PaymentIconAttributes
+}
+
+interface PaymentIconAttributes {
+  url: string
 }
