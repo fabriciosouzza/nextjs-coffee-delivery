@@ -13,26 +13,7 @@ export default function Checkout() {
 
   const deliveryFee = 2;
   const totalOrder = totalItems + deliveryFee;
-
-//   Região 0 - Grande São Paulo;
-// Região 1 - Interior de São Paulo;
-// Região 2 - Rio de Janeiro e Espírito Santo;
-// Região 3 - Minas Gerais;
-// Região 4 - Bahia e Sergipe;
-// Região 5 - Pernambuco, Alagoas, Paraíba e Rio Grande do Norte;
-// Região 6 - Ceará, Piauí, Maranhão, Pará, Amazonas, Acre, Amapá e Roraima;
-// Região 7 - Distrito Federal, Goiás, Tocantins, Mato Grosso, Mato Grosso do Sul e Rondônia;
-// Região 8 - Paraná e Santa Catarina;
-// Região 9 - Rio Grande do Sul.
-
-
-
-// TAXA CEP REGRAS:
-
-// Loja - São Paulo - CEP 01030-001 (Cafeteria São Paulo)
-
-// Fórmula distância = R$2,00 (FIxa) + R$10 * cep-estado/primeiroalgarismo + R$5 * cep-região/segundoalgarismo + R$2 * cep-setor/terceiroalgarismo + R$1 * cep-cidade/quartoalgarismo
-
+  
   return (
     <section className="container mx-auto flex justify-between px-4 mt-12">
       <div className="flex flex-col mb-10">

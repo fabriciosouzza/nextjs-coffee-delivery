@@ -104,3 +104,13 @@ export interface ProductPropsDataType {
 export interface ProductTagsPropsDataType {
   tags: tagsInfo[]
 }
+
+export interface PaymentListProps {
+  id: number
+  attributes: PaymentListAttributes
+}
+
+interface PaymentListAttributes {
+  paymentForm: string
+  icon: string
+}

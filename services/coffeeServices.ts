@@ -1,4 +1,4 @@
-import { Product, order, productTags, successOrderInfo } from "@/utils/models";
+import { PaymentListProps, Product, order, productTags, successOrderInfo } from "@/utils/models";
 
 export async function listCoffees(): Promise<Product[] | any> {
   try {
@@ -81,6 +81,26 @@ export async function getOrderById(
     if (orderReq.ok) {
       const orderReqData = await orderReq.json();
       return orderReqData.data as successOrderInfo;
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getPaymentList(
+): Promise<PaymentListProps[] | undefined> {
+  try {
+    const paymentReq = await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_STRAPI_URL}/api/payments?populate=*`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
+        },
+      }
+    );
+    if (paymentReq.ok) {
+      const paymentReqData = await paymentReq.json();
+      return paymentReqData.data as PaymentListProps[];
     }
   } catch (error) {
     throw error;

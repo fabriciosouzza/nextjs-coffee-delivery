@@ -1,5 +1,5 @@
 "use client";
-import { order } from "@/utils/models";
+import { PaymentListProps, order } from "@/utils/models";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Bank,
@@ -9,13 +9,14 @@ import {
   Money,
   UserList,
 } from "@phosphor-icons/react";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { OrderContext } from "@/context/OrderContext";
-import { newOrderRegister } from "@/services/coffeeServices";
+import { getPaymentList, newOrderRegister } from "@/services/coffeeServices";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addressByCep } from "@/services/cepServices";
+import InputMask from "react-input-mask";
 
 const estados = z.enum([
   "AC",
@@ -68,6 +69,7 @@ type ufFormSchemaType = z.infer<typeof estados>;
 
 export default function AddressForm(total: any) {
   const totalOrderValue = total.total;
+  const [paymentList, setPaymentList] = useState<PaymentListProps[]>();
   const { productsToFetch, cleanProductList, setHeaderPinAddressInfo } =
     useContext(OrderContext);
   const router = useRouter();
@@ -81,7 +83,7 @@ export default function AddressForm(total: any) {
     formState: { errors },
   } = useForm<orderFormSchemaType>({
     resolver: zodResolver(orderFormSchema),
-    mode: "onTouched"
+    mode: "onTouched",
   });
   const onSubmit: SubmitHandler<orderFormSchemaType> = (data) => {
     const orderData: order = {
@@ -116,7 +118,17 @@ export default function AddressForm(total: any) {
 
   // let cepNotFoundBoolean = useRef(false)
 
+  useEffect(() => {
+    async function fetchPayments() {
+      getPaymentList().then((response) => {
+        return setPaymentList(response as PaymentListProps[]);
+      });
+    }
+    fetchPayments();
+  }, []);
+
   const inputToWatch = watch("cep");
+  console.log(inputToWatch);
   useEffect(() => {
     async function fetchAddress() {
       const regex = new RegExp(/[\D]/gm);
@@ -124,7 +136,7 @@ export default function AddressForm(total: any) {
       if (inputClean && inputClean.length == 8) {
         addressByCep(inputClean).then((response) => {
           if ("erro" in response) {
-            alert("CEP não encontrado")
+            alert("CEP não encontrado");
             // cepNotFoundBoolean.current = true
             setValue("rua", ``, { shouldValidate: true });
             setValue("complemento", ``, {
@@ -192,7 +204,9 @@ export default function AddressForm(total: any) {
           placeholder="Nome"
         />
         {errors.username && (
-          <p className="text-xs -mt-5 text-red-600">{errors.username.message}</p>
+          <p className="text-xs -mt-5 text-red-600">
+            {errors.username.message}
+          </p>
         )}
         <input
           type="email"
@@ -220,19 +234,16 @@ export default function AddressForm(total: any) {
           </div>
         </div>
         <div className="flex flex-col justify-start gap-4 self-stretch">
-          <input
-            className="flex w-52 p-3 items-center gap-4 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
-            type="text"
+          <InputMask
+            mask="99999-999"
             id="c12e34p56"
-            {...register("cep")}
             placeholder="CEP"
+            {...register("cep")}
+            className="flex w-52 p-3 items-center gap-4 bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
           />
           {errors.cep && (
             <p className="text-xs -mt-4 text-red-600">{errors.cep.message}</p>
           )}
-          {/* {cepNotFoundBoolean.current && (
-            <p className="text-xs -mt-4 text-red-600">CEP não encontrado</p>
-          )} */}
           <input
             className="flex p-3 items-center gap-1 self-stretch bg-base-input rounded outline-0 border border-base-button focus:border-yellow-dark"
             type="text"
@@ -261,7 +272,9 @@ export default function AddressForm(total: any) {
             </div>
           </div>
           {errors.numero && (
-            <p className="text-xs -mt-4 text-red-600">{errors.numero.message}</p>
+            <p className="text-xs -mt-4 text-red-600">
+              {errors.numero.message}
+            </p>
           )}
 
           <div className="flex items-center gap-3 self-stretch">
@@ -295,7 +308,9 @@ export default function AddressForm(total: any) {
         </div>
         <div className="flex flex-col">
           {errors.bairro && (
-            <p className="text-xs -mt-5 text-red-600">{errors.bairro.message}</p>
+            <p className="text-xs -mt-5 text-red-600">
+              {errors.bairro.message}
+            </p>
           )}
           {errors.cidade && (
             <p className="text-xs text-red-600">{errors.cidade.message}</p>
@@ -320,8 +335,27 @@ export default function AddressForm(total: any) {
             </span>
           </div>
         </div>
-        <fieldset className="flex justify-center gap-3 items-center self-stretch">
-          <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
+        <fieldset className="flex  gap-3 items-center self-stretch flex-wrap">
+          {paymentList &&
+            paymentList.map((paymentItem) => {
+              const markup = paymentItem.attributes.icon
+              return (
+                <label key={paymentItem.id} className="radio-label flex w-44 p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
+                  <input
+                    className="w-0 opacity-0"
+                    type="radio"
+                    value={paymentItem.id}
+                    {...register("payment")}
+                  />
+                  {/* {paymentItem.attributes.icon} */}
+                  <div dangerouslySetInnerHTML={{__html: markup}} />
+                  <span className="font-Roboto text-xs text-base-text uppercase">
+                    {paymentItem.attributes.paymentForm}
+                  </span>
+                </label>
+              );
+            })}
+          {/* <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
             <input
               className="w-0 opacity-0"
               type="radio"
@@ -358,7 +392,7 @@ export default function AddressForm(total: any) {
             <span className="font-Roboto text-xs text-base-text uppercase">
               dinheiro
             </span>
-          </label>
+          </label> */}
         </fieldset>
         <div>
           {errors.payment && (
