@@ -1,47 +1,47 @@
 export interface Product {
   id: number;
-  attributes: productAttributes;
+  attributes: ProductAttributes;
 }
 
-export interface productAttributes {
+export interface ProductAttributes {
   name: string;
   description: string;
-  tags: productTags;
+  tags: ProductTags;
   price: number;
-  image: productImage;
+  image: ProductImage;
 }
 
-export interface productTags {
-  data: tagsInfo[];
+export interface ProductTags {
+  data: TagsInfo[];
 }
 
-interface tagsInfo {
+interface TagsInfo {
   id: number;
-  attributes: tagsAttributes;
+  attributes: TagsAttributes;
 }
 
-interface tagsAttributes {
+interface TagsAttributes {
   type: string;
 }
 
-interface productImage {
-  data: imagesInfo;
+interface ProductImage {
+  data: ImagesInfo;
 }
 
-interface imagesInfo {
+interface ImagesInfo {
   id: number;
-  attributes: imagesAttributes;
+  attributes: ImagesAttributes;
 }
 
-interface imagesAttributes {
+interface ImagesAttributes {
   url: string;
 }
 
-export interface resumeActionOrderType {
-  data: productOrderType;
+export interface ResumeActionOrderType {
+  data: ProductOrderType;
 }
 
-export interface productOrderType {
+export interface ProductOrderType {
   id: number;
   name?: string;
   price?: number;
@@ -49,27 +49,27 @@ export interface productOrderType {
   amount?: number;
 }
 
-export interface order {
-  user: userOrderType;
-  products: productOrderTypeToFetch[];
-  address: registrationType;
-  payment: string;
+export interface Order {
+  user: UserOrderType;
+  products: ProductOrderTypeToFetch[];
+  address: RegistrationType;
+  payment: PaymentProps;
   total: number;
   createdAt?: string;
 }
 
-interface userOrderType {
+interface UserOrderType {
   name: string;
   email: string;
 }
 
-export interface productOrderTypeToFetch {
+export interface ProductOrderTypeToFetch {
   coffeeId: string;
   price: number;
   amount: number;
 }
 
-export interface registrationType {
+export interface RegistrationType {
   username?: string;
   email?: string;
   cep: string;
@@ -82,48 +82,61 @@ export interface registrationType {
   payment?: string;
 }
 
+interface PaymentProps {
+  data: PaymentAttributes;
+}
+
+interface PaymentAttributes {
+  id: number;
+  attributes: PaymentData;
+}
+
+interface PaymentData {
+  paymentForm: string;
+}
+
 export interface ProductCardProps {
   id: number;
-  data: productAttributes;
+  data: ProductAttributes;
 }
 
-export interface successOrderInfo {
+export interface SuccessOrderInfo {
   id: number;
-  attributes: order;
+  attributes: Order;
 }
 
-export interface headerPinAddressType {
+export interface HeaderPinAddressType {
   cidade: string;
   estado: string;
 }
 
 export interface ProductPropsDataType {
-  coffees: Product[]
+  coffees: Product[];
 }
 
 export interface ProductTagsPropsDataType {
-  tags: tagsInfo[]
+  tags: TagsInfo[];
 }
 
 export interface PaymentListProps {
-  id: number
-  attributes: PaymentListAttributes
+  id: number;
+  attributes: PaymentListAttributes;
 }
 
 interface PaymentListAttributes {
-  paymentForm: string
-  icon: PaymentIconData
+  paymentForm: string;
+  icon: PaymentIconData;
 }
 
 interface PaymentIconData {
-  data: PaymentIconProps
+  data: PaymentIconProps;
 }
 
-interface PaymentIconProps{
-  id: number
-  attributes: PaymentIconAttributes
+interface PaymentIconProps {
+  id: number;
+  attributes: PaymentIconAttributes;
 }
 
 interface PaymentIconAttributes {
-  url: string
+  url: string;
 }

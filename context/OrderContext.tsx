@@ -8,9 +8,9 @@ import {
 } from "@/reducers/productOrder/actions";
 import { productOrderReducer } from "@/reducers/productOrder/reducer";
 import {
-  headerPinAddressType,
-  productOrderType,
-  productOrderTypeToFetch,
+  HeaderPinAddressType,
+  ProductOrderType,
+  ProductOrderTypeToFetch,
 } from "@/utils/models";
 import { ReactNode, createContext, useReducer, useState } from "react";
 
@@ -21,16 +21,16 @@ interface OrderContextProviderProps {
 }
 
 interface OrderContextType {
-  productsState: productOrderType[];
+  productsState: ProductOrderType[];
   tagsToFilter: string[];
-  productsToFetch: productOrderTypeToFetch[];
-  headerPinAddressInfo: headerPinAddressType;
-  setTagsToFilter: ([]:any) => void;
-  setHeaderPinAddressInfo: ({}: headerPinAddressType) => void;
-  addNewProduct: (orderAttributes: productOrderType) => void;
-  deleteProduct: (orderAttributes: productOrderType) => void;
-  increaseProductAmount: (orderAttributes: productOrderType) => void;
-  decreaseProductAmount: (orderAttributes: productOrderType) => void;
+  productsToFetch: ProductOrderTypeToFetch[];
+  headerPinAddressInfo: HeaderPinAddressType;
+  setTagsToFilter: ([]: any) => void;
+  setHeaderPinAddressInfo: ({}: HeaderPinAddressType) => void;
+  addNewProduct: (orderAttributes: ProductOrderType) => void;
+  deleteProduct: (orderAttributes: ProductOrderType) => void;
+  increaseProductAmount: (orderAttributes: ProductOrderType) => void;
+  decreaseProductAmount: (orderAttributes: ProductOrderType) => void;
   cleanProductList: () => void;
 }
 
@@ -40,12 +40,12 @@ export default function OrderContextProvider({
   const [productsState, dispatch] = useReducer(productOrderReducer, []);
   const [tagsToFilter, setTagsToFilter] = useState([]);
   const [headerPinAddressInfo, setHeaderPinAddressInfo] =
-    useState<headerPinAddressType>({
+    useState<HeaderPinAddressType>({
       cidade: "",
       estado: "",
     });
 
-  const productsToFetch: productOrderTypeToFetch[] = productsState.map(
+  const productsToFetch: ProductOrderTypeToFetch[] = productsState.map(
     (item) => {
       return {
         coffeeId: `${item.id}`,
@@ -55,16 +55,16 @@ export default function OrderContextProvider({
     }
   );
 
-  function addNewProduct(orderAttributes: productOrderType) {
+  function addNewProduct(orderAttributes: ProductOrderType) {
     dispatch(addNewProductAction(orderAttributes));
   }
-  function deleteProduct(orderAttributes: productOrderType) {
+  function deleteProduct(orderAttributes: ProductOrderType) {
     dispatch(deleteProductAction(orderAttributes));
   }
-  function increaseProductAmount(orderAttributes: productOrderType) {
+  function increaseProductAmount(orderAttributes: ProductOrderType) {
     dispatch(increaseProductAction(orderAttributes));
   }
-  function decreaseProductAmount(orderAttributes: productOrderType) {
+  function decreaseProductAmount(orderAttributes: ProductOrderType) {
     dispatch(decreaseProductAction(orderAttributes));
   }
 

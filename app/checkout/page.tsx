@@ -3,6 +3,8 @@ import { useContext } from "react";
 import AddressForm from "../components/AddressForm";
 import ResumeCard from "../components/ResumeCard";
 import { OrderContext } from "@/context/OrderContext";
+import emptyImage from "public/empty-cart-image.svg";
+import Image from "next/image";
 
 export default function Checkout() {
   const { productsState } = useContext(OrderContext);
@@ -13,7 +15,7 @@ export default function Checkout() {
 
   const deliveryFee = 2;
   const totalOrder = totalItems + deliveryFee;
-  
+
   return (
     <section className="container mx-auto flex justify-between px-4 mt-12">
       <div className="flex flex-col mb-10">
@@ -29,12 +31,21 @@ export default function Checkout() {
         </h4>
         <div className="flex flex-col w-[28rem] p-10 items-start gap-6 rounded-md rounded-tr-[2.75rem] rounded-bl-[2.75rem] bg-base-card">
           <div className="overflow-y-auto max-h-[30.5rem]">
-            {productsState.map((product) => (
-              <>
-                <ResumeCard key={product.id} data={product} />
-                <hr className="stroke-1 stroke-base-button self-stretch h-0 mb-4" />
-              </>
-            ))}
+            {productsState.length > 0 ? (
+              productsState.map((product) => (
+                <>
+                  <ResumeCard key={product.id} data={product} />
+                  <hr className="stroke-1 stroke-base-button self-stretch h-0 mb-4" />
+                </>
+              ))
+            ) : (
+              <div className="flex flex-col justify-center items-center gap-1">
+                <span className="font-Roboto text-sm text-right text-base-text">
+                  Seu carrinho está vazio
+                </span>
+                <Image src={emptyImage} alt="" />
+              </div>
+            )}
           </div>
           <div className="flex flex-col justify-center items-start gap-3 self-stretch">
             <div className="flex justify-between items-center self-stretch">

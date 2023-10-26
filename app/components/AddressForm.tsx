@@ -1,14 +1,7 @@
 "use client";
 import { PaymentListProps, order } from "@/utils/models";
 import { useForm, SubmitHandler } from "react-hook-form";
-import {
-  Bank,
-  CreditCard,
-  CurrencyDollar,
-  MapPinLine,
-  Money,
-  UserList,
-} from "@phosphor-icons/react";
+import { CurrencyDollar, MapPinLine, UserList } from "@phosphor-icons/react";
 import { useContext, useEffect, useState } from "react";
 import { OrderContext } from "@/context/OrderContext";
 import { getPaymentList, newOrderRegister } from "@/services/coffeeServices";
@@ -103,7 +96,7 @@ export default function AddressForm(total: any) {
         uf: data.uf,
       },
       total: totalOrderValue,
-      payment: data.payment as string,
+      payment: data.payment as any,
     };
 
     const idValue = () => {
@@ -337,60 +330,29 @@ export default function AddressForm(total: any) {
         <fieldset className="flex justify-center gap-3 items-center self-stretch flex-wrap">
           {paymentList &&
             paymentList.map((paymentItem) => {
-              console.log(paymentItem.attributes.icon.data.attributes.url)
               return (
-                <label key={paymentItem.id} className="radio-label flex w-48 p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
+                <label
+                  key={paymentItem.id}
+                  className="radio-label flex w-48 p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover"
+                >
                   <input
                     className="w-0 opacity-0"
                     type="radio"
                     value={paymentItem.id}
                     {...register("payment")}
                   />
-                  <Image src={`http://127.0.0.1:1337${paymentItem.attributes.icon.data.attributes.url}`} width={16} height={16} alt=""/>
+                  <Image
+                    src={`http://127.0.0.1:1337${paymentItem.attributes.icon.data.attributes.url}`}
+                    width={16}
+                    height={16}
+                    alt=""
+                  />
                   <span className="font-Roboto text-xs text-base-text uppercase">
                     {paymentItem.attributes.paymentForm}
                   </span>
                 </label>
               );
             })}
-          {/* <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
-            <input
-              className="w-0 opacity-0"
-              type="radio"
-              value="Cartão de Crédito"
-              {...register("payment")}
-            />
-            <CreditCard size={16} fill="#8047F8" />
-            <span className="font-Roboto text-xs text-base-text uppercase">
-              cartão de crédito
-            </span>
-          </label>
-
-          <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
-            <input
-              className="w-0 opacity-0"
-              type="radio"
-              value="Cartão de Débito"
-              {...register("payment")}
-            />
-            <Bank size={16} fill="#8047F8" />
-            <span className="font-Roboto text-xs text-base-text uppercase">
-              cartão de débito
-            </span>
-          </label>
-
-          <label className="radio-label flex flex-[1_0_0%] p-4 items-center gap-3 rounded-md bg-base-button hover:bg-base-hover">
-            <input
-              className="w-0 opacity-0"
-              type="radio"
-              value="Dinheiro"
-              {...register("payment")}
-            />
-            <Money size={16} fill="#8047F8" />
-            <span className="font-Roboto text-xs text-base-text uppercase">
-              dinheiro
-            </span>
-          </label> */}
         </fieldset>
         <div>
           {errors.payment && (

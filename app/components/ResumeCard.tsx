@@ -38,7 +38,7 @@ export default function ProductResumeCard(attributes: resumeActionOrderType) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  const coffeeResumeImage = `http://coffee-strapi:1337${attributes.data.image}`;
+  const coffeeResumeImage = `${process.env.NEXT_PUBLIC_SERVER_STRAPI_URL}${attributes.data.image}`;
 
   return (
     <section className="flex py-2 px-1 justify-between gap-20 items-start self-stretch bg-base-card mb-6">

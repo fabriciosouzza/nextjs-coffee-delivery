@@ -1,4 +1,10 @@
-import { PaymentListProps, Product, order, productTags, successOrderInfo } from "@/utils/models";
+import {
+  PaymentListProps,
+  Product,
+  Order,
+  ProductTags,
+  SuccessOrderInfo,
+} from "@/utils/models";
 
 export async function listCoffees(): Promise<Product[] | any> {
   try {
@@ -21,7 +27,7 @@ export async function listCoffees(): Promise<Product[] | any> {
   }
 }
 
-export async function tagList(): Promise< productTags | any> {
+export async function tagList(): Promise<ProductTags | any> {
   try {
     const tagListReq = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_STRAPI_URL}/api/tags?populate=*`,
@@ -36,13 +42,13 @@ export async function tagList(): Promise< productTags | any> {
       throw error;
     }
     const coffeeData = await tagListReq.json();
-    return coffeeData.data as productTags[];
+    return coffeeData.data as ProductTags[];
   } catch (error) {
     throw error;
   }
 }
 
-export async function newOrderRegister(data: order) {
+export async function newOrderRegister(data: Order) {
   try {
     const addOrderReq = await fetch(
       `${process.env.NEXT_PUBLIC_CLIENT_STRAPI_URL}/api/histories?populate=*`,
@@ -68,7 +74,7 @@ export async function newOrderRegister(data: order) {
 
 export async function getOrderById(
   searchId: number
-): Promise<successOrderInfo | undefined> {
+): Promise<SuccessOrderInfo | undefined> {
   try {
     const orderReq = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_STRAPI_URL}/api/histories/${searchId}?populate=*`,
@@ -80,15 +86,16 @@ export async function getOrderById(
     );
     if (orderReq.ok) {
       const orderReqData = await orderReq.json();
-      return orderReqData.data as successOrderInfo;
+      return orderReqData.data as SuccessOrderInfo;
     }
   } catch (error) {
     throw error;
   }
 }
 
-export async function getPaymentList(
-): Promise<PaymentListProps[] | undefined> {
+export async function getPaymentList(): Promise<
+  PaymentListProps[] | undefined
+> {
   try {
     const paymentReq = await fetch(
       `${process.env.NEXT_PUBLIC_CLIENT_STRAPI_URL}/api/payments?populate=*`,
@@ -108,11 +115,11 @@ export async function getPaymentList(
 }
 
 export async function getHistory(
-  emailTofilter: string
-): Promise<successOrderInfo[] | any> {
+  emailTofilter: string | null
+): Promise<SuccessOrderInfo[] | any> {
   try {
     const orderReq = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_STRAPI_URL}/api/histories?populate[user]=*&populate[products][populate][coffeeId]=*&populate[address]=*&filters[user][email]=${emailTofilter}`,
+      `${process.env.NEXT_PUBLIC_SERVER_STRAPI_URL}/api/histories?populate[user]=*&populate[products][populate][coffeeId]=*&populate[address]=*&populate[payment]=*&filters[user][email]=${emailTofilter}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
@@ -121,7 +128,7 @@ export async function getHistory(
     );
     if (orderReq.ok) {
       const historyReqData = await orderReq.json();
-      return historyReqData.data as successOrderInfo[];
+      return historyReqData.data as SuccessOrderInfo[];
     }
   } catch (error) {
     throw error;

@@ -1,5 +1,4 @@
 import coffeeImage from "public/home-coffee-image.png";
-// import { Coffee, Package, ShoppingCart, Timer } from "@phosphor-icons/react";
 import Image from "next/image";
 import { ShoppingCartSimple } from "@phosphor-icons/react/dist/ssr/ShoppingCartSimple";
 import { Package } from "@phosphor-icons/react/dist/ssr/Package";
